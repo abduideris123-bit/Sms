@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Group SMS Sender</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0a0f1e; --surface:#111827; --card:#1a2236; --border:#2a3a55;
+    --accent:#00d4ff; --accent2:#7c3aed; --green:#10b981; --red:#ef4444;
+    --text:#e2e8f0; --muted:#64748b; --warning:#f59e0b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px}
+  h1{text-align:center;font-size:2rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+  .subtitle{text-align:center;color:var(--muted);font-size:.85rem;margin-bottom:24px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:900px;margin:0 auto}
+  @media(max-width:700px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}
+  .card-title{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:14px}
+  label{font-size:.8rem;color:var(--muted);display:block;margin-bottom:4px;margin-top:12px}
+  input,textarea{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Outfit',sans-serif;font-size:.9rem;padding:10px 12px;outline:none;transition:border .2s}
+  input:focus,textarea:focus{border-color:var(--accent)}
+  textarea{resize:vertical;min-height:100px}
+  .char-bar-wrap{margin-top:6px}
+  .char-info{display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted);margin-bottom:4px}
+  .char-bar{height:4px;background:var(--border);border-radius:4px;overflow:hidden}
+  .char-fill{height:100%;border-radius:4px;transition:width .2s,background .2s;background:var(--green)}
+  .phone-list{display:flex;flex-direction:column;gap:8px;max-height:200px;overflow-y:auto;margin-top:8px}
+  .phone-item{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 10px}
+  .phone-item span{flex:1;font-size:.85rem}
+  .phone-item .name{font-weight:600;color:var(--text)}
+  .phone-item .num{color:var(--muted);font-size:.78rem}
+  .del-btn{background:none;border:none;color:var(--red);cursor:pointer;font-size:1.1rem;padding:0 4px}
+  .add-row{display:flex;gap:8px;margin-top:10px}
+  .add-row input{flex:1}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px 20px;border-radius:12px;font-size:.85rem;font-weight:600;z-index:999;transition:transform .3s ease;box-shadow:0 8px 30px rgba(0,0,0,.4);white-space:nowrap}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+  .toast.error{border-color:var(--red);color:var(--red)}
+  .toast.success{border-color:var(--green);color:var(--green)}
+  .import-phone-btn{width:100%;margin-top:8px;padding:9px;border-radius:10px;background:linear-gradient(135deg,#1a2236,#1e3a5f);border:1.5px dashed var(--accent);color:var(--accent);font-family:'Outfit',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;transition:background .2s}
+  .import-phone-btn:hover{background:rgba(0,212,255,.08)}
+  .btn{border:none;border-radius:10px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:700;padding:10px 18px;font-size:.88rem;transition:opacity .2s,transform .1s}
+  .btn:active{transform:scale(.97)}
+  .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+  .btn-sm{padding:7px 12px;font-size:.78rem}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .days-grid{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .day-btn{padding:7px 12px;border-radius:8px;font-size:.78rem;font-weight:700;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:all .15s;font-family:'Outfit',sans-serif}
+  .day-btn.active{border-color:var(--accent);background:rgba(0,212,255,.12);color:var(--accent)}
+  .log{max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
+  .log-item{display:flex;align-items:flex-start;gap:8px;background:var(--surface);border-radius:8px;padding:8px 10px;font-size:.8rem}
+  .log-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0}
+  .log-dot.sent{background:var(--green)} .log-dot.fail{background:var(--red)} .log-dot.info{background:var(--accent)}
+  .log-name{font-weight:600}
+  .log-time{color:var(--muted);font-size:.72rem}
+  .stats-row{display:flex;gap:10px}
+  .stat{flex:1;background:var(--surface);border-radius:10px;padding:12px;text-align:center}
+  .stat-num{font-size:1.6rem;font-weight:900}
+  .stat-lbl{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+  .full{grid-column:1/-1}
+  .send-btn{width:100%;padding:14px;font-size:1rem;border-radius:12px;background:linear-gradient(135deg,var(--green),#059669);color:#fff;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:900;letter-spacing:1px;transition:opacity .2s;margin-top:6px}
+  .send-btn:disabled{opacity:.4;cursor:not-allowed}
+  .schedule-status{font-size:.78rem;color:var(--warning);background:rgba(245,158,11,.1);border-radius:8px;padding:8px 12px;margin-top:10px}
+  .progress-wrap{margin-top:12px;display:none}
+  .progress-bar{height:8px;background:var(--border);border-radius:8px;overflow:hidden}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:8px;transition:width .3s}
+  .progress-txt{font-size:.78rem;color:var(--muted);margin-top:4px;text-align:center}
+  ::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-track{background:transparent} ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+  .api-badge{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-left:8px;vertical-align:middle}
+  .api-badge.ok{background:rgba(16,185,129,.15);color:var(--green);border:1px solid var(--green)}
+  .api-badge.bad{background:rgba(239,68,68,.15);color:var(--red);border:1px solid var(--red)}
+  .input-eye{position:relative}
+  .input-eye input{padding-right:40px}
+  .eye-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem}
+  .test-btn{width:100%;margin-top:10px;padding:9px;border-radius:10px;background:rgba(0,212,255,.08);border:1.5px solid var(--accent);color:var(--accent);font-family:'Outfit',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;transition:background .2s}
+  .test-btn:hover{background:rgba(0,212,255,.15)}
+  .test-btn:disabled{opacity:.4;cursor:not-allowed}
+  .info-box{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:10px 14px;font-size:.78rem;color:var(--muted);margin-top:10px;line-height:1.8}
+  .info-box a{color:var(--accent);text-decoration:none}
+  .info-box code{color:var(--accent);background:rgba(0,212,255,.08);padding:1px 5px;border-radius:4px}
+  .warn-box{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:10px 14px;font-size:.78rem;color:var(--warning);margin-top:10px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<h1>📱 Group SMS Sender</h1>
+<p class="subtitle">Africa's Talking · Pure HTML · ምንም server አያስፈልግም</p>
+
+<div class="grid">
+
+  <!-- Config -->
+  <div class="card full">
+    <div class="card-title">
+      🔑 ቅንብር
+      <span class="api-badge bad" id="apiBadge">● አልተሞላም</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;">
+      <div>
+        <label>AT Username</label>
+        <input type="text" id="atUsername" placeholder="sandbox" oninput="saveConfig()">
+      </div>
+      <div>
+        <label>API Key</label>
+        <div class="input-eye">
+          <input type="password" id="atApiKey" placeholder="atsk_..." oninput="saveConfig()">
+          <button class="eye-btn" onclick="toggleEye()">👁</button>
+        </div>
+      </div>
+      <div>
+        <label>Sender ID (አማራጭ)</label>
+        <input type="text" id="atSenderId" placeholder="MyApp" oninput="saveConfig()">
+      </div>
+      <div>
+        <label>CORS Proxy URL</label>
+        <input type="text" id="proxyUrl" placeholder="https://..." oninput="saveConfig()">
+      </div>
+    </div>
+    <button class="test-btn" id="testBtn" onclick="testConnection()">🔗 ግንኙነት ፈትን</button>
+    <div class="info-box" style="margin-top:10px">
+      💡 <strong>CORS Proxy</strong> ያስፈልጋል — browser ቀጥታ Africa's Talking ሊጠራ አይችልም።<br>
+      አማራጭ 1 — <strong>የራስዎ Cloudflare Worker</strong> (ነጻ, ፈጣን)፡ <a href="https://developers.cloudflare.com/workers/" target="_blank">workers.cloudflare.com</a> — ከዚህ በታች ያለውን ኮድ ይጠቀሙ።<br>
+      አማራጭ 2 — <strong>cors-anywhere demo</strong> (ለሙከራ ብቻ)፡ <code>https://cors-anywhere.herokuapp.com/</code> — <a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank">ይህን ይጫኑ</a> ለማንቃት።
+    </div>
+    <div class="warn-box">
+      ⚠️ API Key browser localStorage ውስጥ ይቀመጣል። ለምርት (production) Cloudflare Worker ወይም backend ይሻላል።
+    </div>
+
+    <!-- Cloudflare Worker code -->
+    <div style="margin-top:14px">
+      <div style="font-size:.75rem;font-weight:700;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">☁️ Cloudflare Worker ኮድ (ይቅዱ → workers.cloudflare.com ላይ ይለጥፉ)</div>
+      <pre style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:.72rem;color:#a5f3fc;overflow-x:auto;line-height:1.7;"><code>export default {
+  async fetch(request) {
+    if (request.method === 'OPTIONS') {
+      return new Response(null, { headers: corsHeaders() });
+    }
+    const body = await request.json();
+    const { username, apiKey, to, message, from } = body;
+    const params = new URLSearchParams({
+      username, to: Array.isArray(to) ? to.join(',') : to, message
+    });
+    if (from) params.set('from', from);
+    const resp = await fetch('https://api.africastalking.com/version1/messaging', {
+      method: 'POST',
+      headers: {
+        'apiKey': apiKey,
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params.toString(),
+    });
+    const data = await resp.json();
+    return new Response(JSON.stringify({ success: true, result: data }), {
+      headers: { 'Content-Type': 'application/json', ...corsHeaders() }
+    });
+  }
+};
+function corsHeaders() {
+  return {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+}</code></pre>
+      <div style="font-size:.72rem;color:var(--muted);margin-top:6px">Worker deploy ካደረጉ በኋላ የሚሰጥዎትን URL (ለምሳሌ <code style="color:var(--accent)">https://my-sms.username.workers.dev</code>) ወደ "CORS Proxy URL" field ያስገቡ።</div>
+    </div>
+  </div>
+
+  <!-- Message -->
+  <div class="card">
+    <div class="card-title">✉️ መልዕክት</div>
+    <label>የ SMS መልዕክት (ከፍተኛ 4,000 ፊደላት)</label>
+    <textarea id="msgInput" placeholder="መልዕክትዎን እዚህ ይጻፉ..."></textarea>
+    <div class="char-bar-wrap">
+      <div class="char-info">
+        <span id="charCount">0 / 4,000</span>
+        <span id="smsCount">1 SMS</span>
+      </div>
+      <div class="char-bar"><div class="char-fill" id="charFill" style="width:0%"></div></div>
+    </div>
+    <label style="margin-top:14px">📅 ሳምንታዊ ቀናት</label>
+    <div class="days-grid">
+      <button class="day-btn" data-day="0" onclick="toggleDay(this)">እሑድ</button>
+      <button class="day-btn" data-day="1" onclick="toggleDay(this)">ሰኞ</button>
+      <button class="day-btn" data-day="2" onclick="toggleDay(this)">ማክሰኞ</button>
+      <button class="day-btn" data-day="3" onclick="toggleDay(this)">ረቡዕ</button>
+      <button class="day-btn" data-day="4" onclick="toggleDay(this)">ሓሙስ</button>
+      <button class="day-btn" data-day="5" onclick="toggleDay(this)">ዓርብ</button>
+      <button class="day-btn" data-day="6" onclick="toggleDay(this)">ቅዳሜ</button>
+    </div>
+    <label>⏰ የመላኪያ ሰዓት</label>
+    <input type="time" id="schedTime" value="08:00" onchange="updateSchedStatus();saveConfig()">
+    <div class="schedule-status" id="schedStatus" style="display:none"></div>
+  </div>
+
+  <!-- Contacts -->
+  <div class="card">
+    <div class="card-title">👥 ተቀባዮች</div>
+    <button class="import-phone-btn" onclick="importFromPhone()">📲 ከስልክ ደብተር አምጣ</button>
+    <div class="add-row">
+      <input type="text" id="newName" placeholder="ስም">
+      <input type="tel" id="newPhone" placeholder="+251..." onkeydown="if(event.key==='Enter')addContact()">
+      <button class="btn btn-primary btn-sm" onclick="addContact()">+</button>
+    </div>
+    <div style="margin-top:8px;display:flex;gap:6px">
+      <button class="btn btn-sm" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)" onclick="importCSV()">📂 CSV</button>
+      <button class="btn btn-sm" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)" onclick="exportCSV()">💾 Export</button>
+      <span style="flex:1"></span>
+      <span id="contactCount" style="font-size:.75rem;color:var(--muted);line-height:2.2">0 ሰዎች</span>
+    </div>
+    <div class="phone-list" id="phoneList"></div>
+    <input type="file" id="csvFile" accept=".csv" style="display:none" onchange="readCSV(event)">
+  </div>
+
+  <!-- Stats -->
+  <div class="card">
+    <div class="card-title">📊 ስታቲስቲክስ</div>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num" id="stTotal" style="color:var(--accent)">0</div><div class="stat-lbl">ድምር</div></div>
+      <div class="stat"><div class="stat-num" id="stSent" style="color:var(--green)">0</div><div class="stat-lbl">ተላከ</div></div>
+      <div class="stat"><div class="stat-num" id="stFail" style="color:var(--red)">0</div><div class="stat-lbl">አልተላከም</div></div>
+    </div>
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="progress-txt" id="progressTxt">0%</div>
+    </div>
+    <button class="send-btn" id="sendBtn" onclick="sendAll()">🚀 ሁሉንም ላክ</button>
+  </div>
+
+  <!-- Log -->
+  <div class="card">
+    <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+      <span>📋 ታሪክ</span>
+      <button class="btn btn-sm" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)" onclick="clearLog()">አጽዳ</button>
+    </div>
+    <div class="log" id="logList">
+      <div style="color:var(--muted);font-size:.8rem;text-align:center;padding:20px">ሎጎ ባዶ ነው</div>
+    </div>
+  </div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const MAX_CHARS = 4000;
+const AT_URL = 'https://api.africastalking.com/version1/messaging';
+
+let contacts  = JSON.parse(localStorage.getItem('sms_contacts') || '[]');
+let logs      = JSON.parse(localStorage.getItem('sms_logs')     || '[]');
+let schedDays = JSON.parse(localStorage.getItem('sms_days')     || '[]');
+let schedInterval = null;
+
+// ── Init ───────────────────────────────────────────────────────────────────
+(function init() {
+  const cfg = JSON.parse(localStorage.getItem('sms_cfg') || '{}');
+  if (cfg.username) document.getElementById('atUsername').value = cfg.username;
+  if (cfg.apiKey)   document.getElementById('atApiKey').value   = cfg.apiKey;
+  if (cfg.senderId) document.getElementById('atSenderId').value = cfg.senderId;
+  if (cfg.proxyUrl) document.getElementById('proxyUrl').value   = cfg.proxyUrl;
+  if (cfg.msgText)  { document.getElementById('msgInput').value = cfg.msgText; updateChar(); }
+  if (cfg.schedTime) document.getElementById('schedTime').value = cfg.schedTime;
+  updateBadge();
+  render();
+  startScheduler();
+})();
+
+document.getElementById('msgInput').addEventListener('input', () => { updateChar(); saveConfig(); });
+
+function saveConfig() {
+  localStorage.setItem('sms_cfg', JSON.stringify({
+    username: document.getElementById('atUsername').value.trim(),
+    apiKey:   document.getElementById('atApiKey').value.trim(),
+    senderId: document.getElementById('atSenderId').value.trim(),
+    proxyUrl: document.getElementById('proxyUrl').value.trim(),
+    msgText:  document.getElementById('msgInput').value,
+    schedTime:document.getElementById('schedTime').value,
+  }));
+  updateBadge();
+}
+
+function updateBadge() {
+  const u = document.getElementById('atUsername').value.trim();
+  const k = document.getElementById('atApiKey').value.trim();
+  const p = document.getElementById('proxyUrl').value.trim();
+  const b = document.getElementById('apiBadge');
+  if (u && k && p) { b.className='api-badge ok'; b.textContent='● ቅንብር ተሞልቷል'; }
+  else             { b.className='api-badge bad'; b.textContent='● አልተሞላም'; }
+}
+
+function toggleEye() {
+  const i = document.getElementById('atApiKey');
+  i.type = i.type === 'password' ? 'text' : 'password';
+}
+
+function getCfg() {
+  return {
+    username: document.getElementById('atUsername').value.trim(),
+    apiKey:   document.getElementById('atApiKey').value.trim(),
+    senderId: document.getElementById('atSenderId').value.trim(),
+    proxyUrl: document.getElementById('proxyUrl').value.trim(),
+  };
+}
+
+// ── SMS via CORS proxy ─────────────────────────────────────────────────────
+async function sendSMS(phone, message) {
+  const { username, apiKey, senderId, proxyUrl } = getCfg();
+  if (!username || !apiKey) throw new Error('Username እና API Key ያስፈልጋሉ');
+  if (!proxyUrl)            throw new Error('CORS Proxy URL ያስፈልጋል');
+
+  // Build AT form body
+  const params = new URLSearchParams({ username, to: phone, message });
+  if (senderId) params.set('from', senderId);
+
+  // POST through proxy — proxy forwards to AT and adds CORS headers
+  const target = proxyUrl.replace(/\/$/, '') + (proxyUrl.includes('workers.dev') ? '' : '/' + AT_URL);
+  const resp = await fetch(target, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'apiKey': apiKey,
+      'Accept': 'application/json',
+      // cors-anywhere needs this header to know the real target
+      ...(proxyUrl.includes('herokuapp') ? { 'X-Requested-With': 'XMLHttpRequest' } : {}),
+    },
+    body: params.toString(),
+  });
+
+  if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  const data = await resp.json();
+
+  // Handle both Cloudflare Worker wrapper and raw AT response
+  const atData = data.result ?? data;
+  const recipients = atData?.SMSMessageData?.Recipients || [];
+  if (recipients.length > 0) {
+    const r = recipients[0];
+    if (r.status !== 'Success' && r.statusCode !== 101)
+      throw new Error(r.status || 'Delivery failed');
+  }
+  return atData;
+}
+
+async function testConnection() {
+  const { username, apiKey, proxyUrl } = getCfg();
+  if (!username || !apiKey || !proxyUrl) {
+    showToast('⚠️ ሁሉንም fields ይሙሉ!', 'error'); return;
+  }
+  const btn = document.getElementById('testBtn');
+  btn.disabled = true; btn.textContent = '⏳ እየፈተንን...';
+  try {
+    await sendSMS('+251700000000', 'Test - Group SMS Sender');
+    showToast('✅ ግንኙነት ተሳካ!', 'success');
+    document.getElementById('apiBadge').className = 'api-badge ok';
+    document.getElementById('apiBadge').textContent = '● ተገናኝቷል ✓';
+  } catch(e) {
+    showToast('❌ ' + e.message, 'error');
+  }
+  btn.disabled = false; btn.textContent = '🔗 ግንኙነት ፈትን';
+}
+
+// ── Persistence ────────────────────────────────────────────────────────────
+function save() {
+  localStorage.setItem('sms_contacts', JSON.stringify(contacts));
+  localStorage.setItem('sms_logs',     JSON.stringify(logs));
+  localStorage.setItem('sms_days',     JSON.stringify(schedDays));
+}
+
+// ── Render ─────────────────────────────────────────────────────────────────
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function render() {
+  const list = document.getElementById('phoneList');
+  list.innerHTML = contacts.length === 0
+    ? '<div style="color:var(--muted);font-size:.8rem;text-align:center;padding:20px">ምንም ተቀባይ የለም</div>'
+    : contacts.map((c,i) => `
+        <div class="phone-item">
+          <span><div class="name">${esc(c.name||'ስም የለም')}</div><div class="num">${esc(c.phone)}</div></span>
+          <button class="del-btn" onclick="removeContact(${i})">✕</button>
+        </div>`).join('');
+
+  document.getElementById('contactCount').textContent = contacts.length + ' ሰዎች';
+  document.getElementById('stTotal').textContent = contacts.length;
+
+  const logEl = document.getElementById('logList');
+  logEl.innerHTML = logs.length === 0
+    ? '<div style="color:var(--muted);font-size:.8rem;text-align:center;padding:20px">ሎጎ ባዶ ነው</div>'
+    : [...logs].reverse().map(l => `
+        <div class="log-item">
+          <div class="log-dot ${l.type}"></div>
+          <div style="flex:1">
+            <span class="log-name">${esc(l.name)}</span>
+            <span style="color:var(--muted)"> · ${esc(l.phone)}</span>
+            <div class="log-time">${esc(l.msg)} · ${l.time}</div>
+          </div>
+        </div>`).join('');
+
+  document.getElementById('stSent').textContent = logs.filter(l=>l.type==='sent').length;
+  document.getElementById('stFail').textContent = logs.filter(l=>l.type==='fail').length;
+  document.querySelectorAll('.day-btn').forEach(b => b.classList.toggle('active', schedDays.includes(+b.dataset.day)));
+  updateSchedStatus();
+}
+
+function updateChar() {
+  const v = document.getElementById('msgInput').value, n = v.length;
+  document.getElementById('charCount').textContent = n.toLocaleString() + ' / ' + MAX_CHARS.toLocaleString();
+  document.getElementById('smsCount').textContent  = Math.ceil(n/160) + ' SMS' + (Math.ceil(n/160)>1?' segments':'');
+  const f = document.getElementById('charFill');
+  f.style.width      = Math.min(n/MAX_CHARS*100,100) + '%';
+  f.style.background = n > MAX_CHARS ? 'var(--red)' : n > 3500 ? 'var(--warning)' : 'var(--green)';
+}
+
+function showToast(msg, type='info') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast ' + type; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ── Contacts ───────────────────────────────────────────────────────────────
+function normalizePhone(p) { return p.replace(/[\s\-().]/g, ''); }
+function isDuplicate(phone) { const n=normalizePhone(phone); return contacts.some(c=>normalizePhone(c.phone)===n); }
+
+function addContact() {
+  const name  = document.getElementById('newName').value.trim();
+  const phone = document.getElementById('newPhone').value.trim();
+  if (!phone) { showToast('⚠️ ስልክ ቁጥር ያስፈልጋል!','error'); return; }
+  if (isDuplicate(phone)) { showToast('❌ ቁጥሩ አስቀድሞ አለ','error'); return; }
+  contacts.push({ name, phone });
+  document.getElementById('newName').value = '';
+  document.getElementById('newPhone').value = '';
+  showToast('✅ ' + (name||phone) + ' ተጨምሯል!', 'success');
+  save(); render();
+}
+
+async function importFromPhone() {
+  if (!('contacts' in navigator && 'ContactsManager' in window)) {
+    showToast('⚠️ Chrome/Android ይጠቀሙ','error'); return;
+  }
+  try {
+    const results = await navigator.contacts.select(['name','tel'],{multiple:true});
+    if (!results?.length) { showToast('ምንም አልተመረጠም','info'); return; }
+    let added=0, dupes=0;
+    results.forEach(c => {
+      const name = (c.name&&c.name[0]) || '';
+      (c.tel||[]).forEach(tel => {
+        const phone = tel.trim(); if (!phone) return;
+        if (isDuplicate(phone)) { dupes++; return; }
+        contacts.push({name,phone}); added++;
+      });
+    });
+    save(); render();
+    showToast(`✅ ${added} ሰዎች${dupes?' · '+dupes+' ድግምት':''}`, added>0?'success':'error');
+  } catch(e) { showToast('❌ '+e.message,'error'); }
+}
+
+function removeContact(i) { contacts.splice(i,1); save(); render(); }
+
+// ── Schedule ───────────────────────────────────────────────────────────────
+function toggleDay(btn) {
+  const d=+btn.dataset.day, idx=schedDays.indexOf(d);
+  if (idx>=0) schedDays.splice(idx,1); else schedDays.push(d);
+  save(); render();
+}
+
+function updateSchedStatus() {
+  const el = document.getElementById('schedStatus');
+  if (schedDays.length===0) { el.style.display='none'; return; }
+  const names = ['እሑድ','ሰኞ','ማክሰኞ','ረቡዕ','ሓሙስ','ዓርብ','ቅዳሜ'];
+  el.style.display='block';
+  el.textContent = `⏰ ቀጣይ ልኬት: ${[...schedDays].sort().map(d=>names[d]).join(', ')} ሰዓት ${document.getElementById('schedTime').value}`;
+}
+
+function startScheduler() {
+  if (schedInterval) clearInterval(schedInterval);
+  schedInterval = setInterval(() => {
+    if (!schedDays.length) return;
+    const now=new Date(), day=now.getDay();
+    const hhmm=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+    if (schedDays.includes(day) && hhmm===document.getElementById('schedTime').value) {
+      const key=`sms_last_${day}_${hhmm}`, today=now.toDateString();
+      if (localStorage.getItem(key)!==today) {
+        localStorage.setItem(key,today);
+        showToast('⏰ ሰዓቱ ደረሰ — SMS እየተላከ...','info');
+        sendAll();
+      }
+    }
+  }, 60000);
+}
+
+// ── Send all ───────────────────────────────────────────────────────────────
+async function sendAll() {
+  const msg = document.getElementById('msgInput').value.trim();
+  if (!msg)              { showToast('⚠️ መልዕክት ያስፈልጋል!','error'); return; }
+  if (msg.length>MAX_CHARS){ showToast('⚠️ ከ4,000 ፊደላት አልፏል!','error'); return; }
+  if (!contacts.length)  { showToast('⚠️ ቢያንስ አንድ ተቀባይ!','error'); return; }
+  const {username,apiKey,proxyUrl}=getCfg();
+  if (!username||!apiKey||!proxyUrl){ showToast('⚠️ ቅንብር ያስፈልጋል!','error'); return; }
+
+  const btn=document.getElementById('sendBtn');
+  btn.disabled=true; btn.textContent='⏳ እየተላከ...';
+  document.getElementById('progressWrap').style.display='block';
+  let ok=0, fail=0;
+
+  for (let i=0; i<contacts.length; i++) {
+    const c=contacts[i];
+    const pct=Math.round((i+1)/contacts.length*100);
+    document.getElementById('progressFill').style.width=pct+'%';
+    document.getElementById('progressTxt').textContent=`${i+1} / ${contacts.length} (${pct}%)`;
+    const now=new Date().toLocaleTimeString('am-ET');
+    try {
+      await sendSMS(c.phone, msg);
+      logs.push({type:'sent', name:c.name||'ስም የለም', phone:c.phone, msg:'ተላከ ✓', time:now});
+      ok++;
+    } catch(err) {
+      logs.push({type:'fail', name:c.name||'ስም የለም', phone:c.phone, msg:'አልተላከም: '+err.message, time:now});
+      fail++;
+    }
+    if (i<contacts.length-1) await new Promise(r=>setTimeout(r,500));
+  }
+
+  logs.push({type:'info',name:'ስርዓት',phone:'—',msg:`${ok} ✓ / ${fail} ✗ · ተጠናቋል`,time:new Date().toLocaleTimeString('am-ET')});
+  save(); render();
+  btn.disabled=false; btn.textContent='🚀 ሁሉንም ላክ';
+  document.getElementById('progressTxt').textContent=`✅ ተጠናቋል! ${ok} ✓ · ${fail} ✗`;
+  showToast(`✅ ${ok} ተላከ · ${fail} አልተላከም`, ok>0?'success':'error');
+}
+
+function clearLog() { logs=[]; save(); render(); }
+
+// ── CSV ────────────────────────────────────────────────────────────────────
+function importCSV() { document.getElementById('csvFile').click(); }
+function readCSV(e) {
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    let added=0,dupes=0;
+    ev.target.result.split('\n').forEach(line=>{
+      const parts=line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
+      const name =(parts[0]||'').trim().replace(/^"|"$/g,'');
+      const phone=(parts[1]||parts[0]||'').trim().replace(/^"|"$/g,'');
+      if (phone&&phone.match(/[\d+]/)) {
+        if (isDuplicate(phone)){dupes++;return;}
+        contacts.push({name,phone}); added++;
+      }
+    });
+    save(); render();
+    showToast(`✅ ${added} ሰዎች${dupes?' · '+dupes+' ድግምት':''}`, 'success');
+  };
+  r.readAsText(f); e.target.value='';
+}
+function exportCSV() {
+  const csv=contacts.map(c=>`"${(c.name||'').replace(/"/g,'""')}","${c.phone}"`).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent('ስም,ስልክ\n'+csv);
+  a.download='contacts.csv'; a.click();
+}
+</script>
+</body>
+</html>
