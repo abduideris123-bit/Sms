@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14382e">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="እዳ መዝገብ">
+<title>የእዳ መዝገብ</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAEgElEQVR4nO3cy3HcRhSG0R6WQ1AALgegtTJzDM6MawbgcgDMQV6oRkVpHsSrgdv4z1lqQY7Q90MDg+FcWjFfvn39fvRroJ/317fL0a/ho0NfjGGntWOj2P0XG3qe2TuG3X6ZwWeOvULo/ksMPmv0DqHbDzf4bKlXCJv/UINPT1uH8LLlDzP89Lb1jG1Sk8HnCFvsBqt3AMPPUbaYvVUBGH6OtnYGFwdg+KlizSwuCsDwU83SmZwdgOGnqiWzOSsAw091c2d0cgCGn1HMmdVJARh+RjN1Zj8NwPAzqimzu+lHIWA0TwNw9md0n83wwwAMP2fxbJZdAhHtbgDO/pzNo5m2AxDtJgBnf87q3mzbAYj2SwDO/pzd7zNuByDazwCc/UnxcdbtAEQTANFeWnP5Q57rzNsBiCYAogmAaAIg2sUNMMnsAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRBEA0ARBNAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRBEA0ARDtj6NfwBz//vPn3X//6+//dn0d/HCG9Rjmm+EeHWxqGiWC8gEY/LFVD8E9ANFKB+DsP77qa1g2gOoHjukqr2XZAGAPAiCaAIgmAKIJgGhlA6j+AIXpKq9l2QBaq33gmKb6GpYOAHor/1mgq8oPU7hV/cx/NcwOMMoBZay1GmYHgB6G2QGgBwEQTQBEEwDRBEA0ARBNAEQTANEEQDQBEE0ARBMA0QRANAEQ7RRfj04tI/09wDA7gOEfx0hrVf4PYkY6mNyqvhsMswNAD6UDcPYfX/U1LBtA9QPHdJXXsmwAsAcBEE0ARBMA0QRAtLIBVH+AwnSV17JsAK3VPnBMU30NSwcAvZX/LNBV5Ycp3Kp+5r8aJoDWHkcwysE+mzOsx1ABwNbcAxBNAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRBEA0ARBNAETz9egDG+lz91UNswMY/luOyXrl/yDGIk9jN1hmmB0AeigdgLP/dI7VMmUDsKDzOWbzlQ0A9iAAogmAaAIgmgCIVjYAD3bmc8zmKxtAaxZ0DsdqmdIBQG/lPwt05SHPfc786wwTQGvn+DruJVL/33sYKgDYmnsAogmAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCI9vL++nY5+kXAEd5f3y52AKIJgGgCIJoAiPbS2o+bgaNfCOzpOvN2AKIJgGg/A3AZRIqPs24HINovAdgFOLvfZ9wOQLSbAOwCnNW92bYDEO1uAHYBzubRTNsBiPYwALsAZ/Fslp/uACJgdJ/NsEsgon0agF2AUU2Z3Uk7gAgYzdSZnXwJJAJGMWdWZ90DiIDq5s7o7JtgEVDVktlc9C6QCKhm6UwufhtUBFSxZhZXPQcQAUdbO4OrH4SJgKNsMXubDu+Xb1+/b/nz4J4tT7qbfhTCbkBvW89Yt4G1G7ClXifX7mdsIbBG76uK3S5ZhMAce11O737NLgSe2fs+8tCbVjHQ2rFvnpR710YU51btncL/AQ76N7t/eHsjAAAAAElFTkSuQmCC">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAEgElEQVR4nO3cy3HcRhSG0R6WQ1AALgegtTJzDM6MawbgcgDMQV6oRkVpHsSrgdv4z1lqQY7Q90MDg+FcWjFfvn39fvRroJ/317fL0a/ho0NfjGGntWOj2P0XG3qe2TuG3X6ZwWeOvULo/ksMPmv0DqHbDzf4bKlXCJv/UINPT1uH8LLlDzP89Lb1jG1Sk8HnCFvsBqt3AMPPUbaYvVUBGH6OtnYGFwdg+KlizSwuCsDwU83SmZwdgOGnqiWzOSsAw091c2d0cgCGn1HMmdVJARh+RjN1Zj8NwPAzqimzu+lHIWA0TwNw9md0n83wwwAMP2fxbJZdAhHtbgDO/pzNo5m2AxDtJgBnf87q3mzbAYj2SwDO/pzd7zNuByDazwCc/UnxcdbtAEQTANFeWnP5Q57rzNsBiCYAogmAaAIg2sUNMMnsAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRBEA0ARBNAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRBEA0ARDtj6NfwBz//vPn3X//6+//dn0d/HCG9Rjmm+EeHWxqGiWC8gEY/LFVD8E9ANFKB+DsP77qa1g2gOoHjukqr2XZAGAPAiCaAIgmAKIJgGhlA6j+AIXpKq9l2QBaq33gmKb6GpYOAHor/1mgq8oPU7hV/cx/NcwOMMoBZay1GmYHgB6G2QGgBwEQTQBEEwDRBEA0ARBNAEQTANEEQDQBEE0ARBMA0QRANAEQ7RRfj04tI/09wDA7gOEfx0hrVf4PYkY6mNyqvhsMswNAD6UDcPYfX/U1LBtA9QPHdJXXsmwAsAcBEE0ARBMA0QRAtLIBVH+AwnSV17JsAK3VPnBMU30NSwcAvZX/LNBV5Ycp3Kp+5r8aJoDWHkcwysE+mzOsx1ABwNbcAxBNAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRBEA0ARBNAETz9egDG+lz91UNswMY/luOyXrl/yDGIk9jN1hmmB0AeigdgLP/dI7VMmUDsKDzOWbzlQ0A9iAAogmAaAIgmgCIVjYAD3bmc8zmKxtAaxZ0DsdqmdIBQG/lPwt05SHPfc786wwTQGvn+DruJVL/33sYKgDYmnsAogmAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCI9vL++nY5+kXAEd5f3y52AKIJgGgCIJoAiPbS2o+bgaNfCOzpOvN2AKIJgGg/A3AZRIqPs24HINovAdgFOLvfZ9wOQLSbAOwCnNW92bYDEO1uAHYBzubRTNsBiPYwALsAZ/Fslp/uACJgdJ/NsEsgon0agF2AUU2Z3Uk7gAgYzdSZnXwJJAJGMWdWZ90DiIDq5s7o7JtgEVDVktlc9C6QCKhm6UwufhtUBFSxZhZXPQcQAUdbO4OrH4SJgKNsMXubDu+Xb1+/b/nz4J4tT7qbfhTCbkBvW89Yt4G1G7ClXifX7mdsIbBG76uK3S5ZhMAce11O737NLgSe2fs+8tCbVjHQ2rFvnpR710YU51btncL/AQ76N7t/eHsjAAAAAElFTkSuQmCC">
+<style>
+:root{
+  --bg:#f1f4f2; --card:#ffffff; --ink:#15231f; --mute:#667a73; --line:#dde5e1;
+  --head:#14382e; --headink:#f4f7f5; --gold:#f2c14e;
+  --in:#1d7a4c; --in-bg:#e2f3ea; --out:#b3402e; --out-bg:#fbe9e5; --warn:#b97d0a; --warn-bg:#fcf1d6;
+  --r:14px;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0e1815; --card:#16241f; --ink:#e8f0ec; --mute:#92a8a0; --line:#25382f;
+  --head:#0a1f19; --in:#52c98a; --in-bg:#17382a; --out:#ef8672; --out-bg:#3b211c; --warn:#f2c14e; --warn-bg:#3a2f12}
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Sans Ethiopic','Abyssinica SIL',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:16px;line-height:1.5}
+body{padding-bottom:calc(88px + env(safe-area-inset-bottom,0px))}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.wrap{max-width:640px;margin:0 auto;padding:0 14px}
+header.top{background:var(--head);color:var(--headink);padding:calc(14px + env(safe-area-inset-top,0px)) 0 18px}
+header.top .wrap{display:flex;align-items:center;gap:10px}
+header.top h1{font-size:19px;margin:0;flex:1;font-weight:700}
+header.top button{background:none;border:0;color:var(--headink);font-size:22px;padding:4px 8px;border-radius:8px}
+.sum{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.sum .box{background:rgba(255,255,255,.09);border-radius:12px;padding:10px 12px}
+.sum small{display:block;opacity:.78;font-size:12.5px}
+.sum b{font-size:20px;font-variant-numeric:tabular-nums}
+.sum .net{grid-column:1/3;background:var(--gold);color:#2a2008}
+.sum .net small{opacity:.8}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0 6px;scrollbar-width:none}
+.chip{border:1px solid var(--line);background:var(--card);padding:6px 13px;border-radius:99px;white-space:nowrap;font-size:14px}
+.chip.on{background:var(--head);color:var(--headink);border-color:var(--head)}
+.search{width:100%;margin-top:12px;padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card)}
+.list{margin:6px 0 0;padding:0;list-style:none}
+.row{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;margin-top:8px;width:100%;text-align:left}
+.av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;flex:none}
+.in .av{background:var(--in-bg);color:var(--in)} .out .av{background:var(--out-bg);color:var(--out)} .zero .av{background:var(--line);color:var(--mute)}
+.row .mid{flex:1;min-width:0}
+.row .nm{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .sub{font-size:13px;color:var(--mute)}
+.amt{font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.amt small{display:block;font-weight:400;font-size:12px;color:var(--mute)}
+.in .amt{color:var(--in)} .out .amt{color:var(--out)}
+.badge{display:inline-block;font-size:11.5px;padding:1px 8px;border-radius:99px;background:var(--warn-bg);color:var(--warn);margin-left:6px;vertical-align:middle}
+.empty{text-align:center;color:var(--mute);padding:36px 10px}
+nav.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:6px 0 calc(6px + env(safe-area-inset-bottom,0px))}
+nav.bar .wrap{display:grid;grid-template-columns:repeat(5,1fr);align-items:center}
+nav.bar button{background:none;border:0;padding:6px;color:var(--mute);font-size:12.5px;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav.bar button.on{color:var(--head)}
+@media (prefers-color-scheme:dark){nav.bar button.on{color:var(--gold)}}
+nav.bar .ic{font-size:21px;line-height:1}
+.fab{width:56px;height:56px;border-radius:50%!important;background:var(--head)!important;color:var(--gold)!important;font-size:30px!important;margin:-26px auto 0;box-shadow:0 4px 14px rgba(0,0,0,.28);justify-content:center;flex-direction:row!important;gap:0!important}
+/* person */
+.phead{display:flex;align-items:center;gap:8px;margin:14px 0 4px}
+.phead h2{margin:0;flex:1;font-size:21px}
+.link{background:none;border:0;color:var(--mute);padding:6px 10px;border-radius:8px;font-size:14px}
+.big{border-radius:var(--r);padding:16px;margin-top:8px}
+.big.in{background:var(--in-bg);color:var(--in)} .big.out{background:var(--out-bg);color:var(--out)} .big.zero{background:var(--line);color:var(--mute)}
+.big small{display:block}
+.big b{font-size:28px;font-variant-numeric:tabular-nums}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.btn{border:1px solid var(--line);background:var(--card);padding:11px;border-radius:12px;font-weight:600}
+.btn.p{background:var(--head);color:var(--headink);border-color:var(--head)}
+.btn.d{color:var(--out)}
+.tx{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:11px 14px;margin-top:8px;width:100%;text-align:left;display:block}
+.tx .l1{display:flex;justify-content:space-between;gap:10px;font-weight:600}
+.tx .l2{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--mute)}
+.tx .plus{color:var(--in)} .tx .minus{color:var(--out)}
+.tag{font-size:12px;padding:1px 8px;border-radius:99px;font-weight:600}
+.tag.lend,.tag.repay_out{background:var(--in-bg);color:var(--in)} .tag.borrow,.tag.repay_in{background:var(--out-bg);color:var(--out)}
+h3{font-size:15px;color:var(--mute);margin:20px 0 4px;font-weight:600}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-top:8px}
+.card p{margin:4px 0 10px;color:var(--mute);font-size:14px}
+.card input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);margin-bottom:8px}
+.card .btn{width:100%;margin-top:4px}
+/* sheet */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;justify-content:center;z-index:20}
+.sheet{background:var(--card);width:100%;max-width:560px;border-radius:20px 20px 0 0;padding:16px 16px calc(18px + env(safe-area-inset-bottom,0px));max-height:94vh;overflow:auto}
+.sheet h2{margin:0 0 10px;font-size:18px}
+.types{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.types button{border:2px solid var(--line);background:var(--bg);padding:9px 6px;border-radius:12px;font-weight:600;font-size:14px;line-height:1.25}
+.types button small{display:block;font-weight:400;color:var(--mute);font-size:12px}
+.types button.on.lend,.types button.on.repay_out{border-color:var(--in);background:var(--in-bg)}
+.types button.on.borrow,.types button.on.repay_in{border-color:var(--out);background:var(--out-bg)}
+.sheet label{display:block;font-size:13px;color:var(--mute);margin:10px 0 3px}
+.sheet input,.sheet select,.sheet textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sheet .total{font-size:20px;font-weight:700}
+.toast{position:fixed;left:50%;bottom:calc(100px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#222;color:#fff;padding:10px 16px;border-radius:99px;z-index:50;font-size:14px;max-width:90%}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.inst{background:var(--gold)!important;color:#2a2008!important;font-size:14px!important;font-weight:700;padding:7px 12px!important;border-radius:99px!important}
+.rep table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0;background:var(--card)}
+.rep th,.rep td{border:1px solid var(--line);padding:6px 8px;text-align:left}
+.rep td.n{text-align:right;font-variant-numeric:tabular-nums}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="sheet"></div>
+
+<script>
+'use strict';
+/* ---------- helpers ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => Number(n).toLocaleString('en-US', {maximumFractionDigits: 2});
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const today = () => new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+const KEY = 'edha_v1', CFG = 'edha_cfg';
+
+const SIGN = {lend: 1, repay_out: 1, borrow: -1, repay_in: -1};
+const LABEL = {lend: 'ሰጠሁ', borrow: 'ወሰድኩ', repay_in: 'ተቀበልኩ', repay_out: 'ከፈልኩ'};
+const HINT  = {lend: 'በዱቤ ሸጥኩ/አበደርኩ', borrow: 'በዱቤ ወሰድኩ/ተበደርኩ', repay_in: 'ክፍያ ተቀበልኩ', repay_out: 'ክፍያ ከፈልኩ'};
+
+let db = {people: [], tx: [], trash: [], lastBackup: null};
+let cfg = {token: '', chat: ''};
+try { db = Object.assign(db, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) {}
+try { cfg = Object.assign(cfg, JSON.parse(localStorage.getItem(CFG) || '{}')); } catch (e) {}
+const snap = () => JSON.stringify({people: db.people, tx: db.tx, trash: db.trash || []});
+let prevState = snap(); const undoStack = [];
+const save = () => { scheduleTg(); const s0 = snap(); if (s0 !== prevState) { undoStack.push(prevState); if (undoStack.length > 15) undoStack.shift(); prevState = s0; showUndoBar(); } try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (e) { toast('ማስቀመጥ አልተቻለም — ማከማቻ ሞልቷል'); } };
+const saveCfg = () => { try { localStorage.setItem(CFG, JSON.stringify(cfg)); } catch (e) {} };
+
+let view = {name: 'home', pid: null, filter: 'all', q: '', range: '30'};
+
+function toast(msg) {
+  const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t); setTimeout(() => t.remove(), 2400);
+}
+
+/* ---------- calculations ---------- */
+const person = id => db.people.find(p => p.id === id);
+const txOf = pid => db.tx.filter(t => t.pid === pid).sort((a, b) => (a.date + a.id).localeCompare(b.date + b.id));
+const balanceOf = pid => db.tx.reduce((s, t) => t.pid === pid ? s + SIGN[t.type] * t.amount : s, 0);
+// overdue: a lend/borrow entry with a past due date while the person's debt in that direction is still open
+function overdue(pid) {
+  const b = balanceOf(pid); if (Math.abs(b) < 0.005) return false;
+  const t0 = today();
+  return db.tx.some(t => t.pid === pid && t.due && t.due < t0 && ((b > 0 && t.type === 'lend') || (b < 0 && t.type === 'borrow')));
+}
+function totals() {
+  let inn = 0, out = 0;
+  db.people.forEach(p => { const b = balanceOf(p.id); if (b > 0) inn += b; else out += -b; });
+  return {inn, out, net: inn - out};
+}
+const balLabel = b => b > 0.005 ? 'ይከፍለኛል' : b < -0.005 ? 'እከፍለዋለሁ' : 'ተጠርጓል';
+const cls = b => b > 0.005 ? 'in' : b < -0.005 ? 'out' : 'zero';
+
+/* ---------- install ---------- */
+let deferredInstall = null;
+const isStandalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+const installBtn = () => isStandalone() ? '' : '<button class="inst" data-act="install">⬇ Install</button>';
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; render(); });
+window.addEventListener('appinstalled', () => { deferredInstall = null; render(); toast('ተጭኗል ✓'); });
+async function doInstall() {
+  if (deferredInstall) { deferredInstall.prompt(); try { await deferredInstall.userChoice; } catch (e) {} deferredInstall = null; render(); return; }
+  showInstallHelp();
+}
+function showInstallHelp() {
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  $('#sheet').innerHTML = `<div class="ov" id="ov"><div class="sheet"><h2>📲 ወደ Home Screen ጨምር</h2>
+  <ol style="padding-left:20px;line-height:1.9">${ios
+    ? '<li>በ <b>Safari</b> ክፈት</li><li>ከታች <b>Share</b> (⬆) ተጫን</li><li><b>Add to Home Screen</b> ምረጥ</li><li><b>Add</b> ተጫን</li>'
+    : '<li>በ <b>Chrome</b> ክፈት</li><li>ከላይ በቀኝ <b>⋮</b> ተጫን</li><li><b>Add to Home screen</b> ወይም <b>Install app</b> ምረጥ</li><li><b>Install</b> ተጫን</li>'}</ol>
+  <button class="btn p" style="width:100%" id="fc">እሺ</button></div></div>`;
+  $('#fc').onclick = closeSheet; $('#ov').addEventListener('click', e => { if (e.target.id === 'ov') closeSheet(); });
+}
+function installBanner() {
+  if (isStandalone() || cfg.noInstall) return '';
+  return `<div class="card" style="background:var(--head);color:var(--headink)"><b>📲 ወደ Home Screen ጨምር</b><p style="color:inherit;opacity:.85">እንደ መተግበሪያ ከስልክህ ገጽ በቀጥታ ክፈተው።</p><div class="acts"><button class="btn" style="background:var(--gold);color:#2a2008;border-color:var(--gold)" data-act="install">ጨምር</button><button class="btn" style="background:none;color:inherit" data-act="noinst">አሁን አይደለም</button></div></div>`;
+}
+
+/* ---------- render ---------- */
+function render() {
+  const app = $('#app');
+  if (view.name === 'person' && !person(view.pid)) view = {...view, name: 'home'};
+  app.innerHTML = ({home: homeHTML, person: personHTML, report: reportHTML, items: itemsHTML, trash: trashHTML, settings: settingsHTML}[view.name] || homeHTML)();
+  const q = $('#q'); if (q && document.activeElement !== q && view._focusQ) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
+  const pq = $('#pq'); if (pq && document.activeElement !== pq && view._focusP) { pq.focus(); pq.setSelectionRange(pq.value.length, pq.value.length); }
+  const iq = $('#iq'); if (iq && document.activeElement !== iq && view._focusI) { iq.focus(); iq.setSelectionRange(iq.value.length, iq.value.length); }
+  view._focusQ = false; view._focusP = false; view._focusI = false;
+}
+
+function navHTML() {
+  const b = (v, on, ic, t) => `<button data-act="go" data-v="${v}" class="${on ? 'on' : ''}"><span class="ic">${ic}</span>${t}</button>`;
+  return `<nav class="bar"><div class="wrap">${b('home', view.name === 'home' || view.name === 'person', '▤', 'መዝገብ')}${b('report', view.name === 'report' || view.name === 'items', '▥', 'ሪፖርት')}<button class="fab" data-act="new" aria-label="አዲስ ግብይት">+</button>${b('trash', view.name === 'trash', '♻', 'ታሪክ')}${b('settings', view.name === 'settings', '⚙', 'ቅንብር')}</div></nav>`;
+}
+
+function homeHTML() {
+  const T = totals();
+  let ppl = db.people.map(p => ({p, b: balanceOf(p.id), od: overdue(p.id), n: db.tx.filter(t => t.pid === p.id).length}));
+  const f = view.filter, q = view.q.trim().toLowerCase();
+  if (f === 'in') ppl = ppl.filter(x => x.b > 0.005);
+  if (f === 'out') ppl = ppl.filter(x => x.b < -0.005);
+  if (f === 'od') ppl = ppl.filter(x => x.od);
+  if (q) ppl = ppl.filter(x => (x.p.name + ' ' + (x.p.phone || '')).toLowerCase().includes(q));
+  ppl.sort((a, b) => Math.abs(b.b) - Math.abs(a.b));
+  const hits = q ? db.tx.filter(t => (t.item || '').toLowerCase().includes(q) && person(t.pid)).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 40) : [];
+  const chip = (k, t) => `<button class="chip ${f === k ? 'on' : ''}" data-act="filter" data-k="${k}">${t}</button>`;
+  return `
+  <header class="top"><div class="wrap" style="flex-wrap:wrap">
+    <h1>የእዳ መዝገብ</h1>${installBtn()}
+    <div class="sum" style="width:100%">
+      <div class="box"><small>ሊሰበሰብልኝ ያለ</small><b>${fmt(T.inn)}</b></div>
+      <div class="box"><small>መክፈል ያለብኝ</small><b>${fmt(T.out)}</b></div>
+      <div class="box net"><small>ልዩነት (ሊሰበሰብ − መክፈል)</small><b>${T.net < 0 ? '−' : ''}${fmt(Math.abs(T.net))} ብር</b></div>
+    </div></div></header>
+  <main class="wrap">
+    ${installBanner()}${dueBanner()}<input id="q" class="search" type="search" placeholder="ሰው ወይም ዕቃ ፈልግ…" value="${esc(view.q)}" autocomplete="off">
+    <div class="chips">${chip('all', 'ሁሉም')}${chip('in', 'ባለእዳዎቼ')}${chip('out', 'አበዳሪዎቼ')}${chip('od', 'ጊዜ ያለፈባቸው')}</div>
+    <ul class="list">${ppl.map(x => `
+      <li><button class="row ${cls(x.b)}" data-act="open" data-id="${x.p.id}">
+        <div class="av">${esc([...x.p.name][0] || '?')}</div>
+        <div class="mid"><div class="nm">${esc(x.p.name)}${x.od ? '<span class="badge">ጊዜው አልፏል</span>' : ''}</div>
+        <div class="sub">${x.n} ግብይት${x.p.phone ? ' · ' + esc(x.p.phone) : ''}</div></div>
+        <div class="amt">${fmt(Math.abs(x.b))}<small>${balLabel(x.b)}</small></div>
+      </button></li>`).join('')}</ul>
+    ${itemHits(hits)}
+    ${ppl.length || hits.length ? '' : `<div class="empty">${db.people.length ? 'ምንም አልተገኘም' : 'እስካሁን ምንም መዝገብ የለም።<br>ከታች ያለውን <b>+</b> ተጫን።'}</div>`}
+  </main>${navHTML()}`;
+}
+
+function personHTML() {
+  const p = person(view.pid), b = balanceOf(p.id), list = txOf(p.id);
+  let run = 0; const withBal = list.map(t => (run += SIGN[t.type] * t.amount, {t, run}));
+  const t0 = today();
+  return `
+  <header class="top"><div class="wrap">
+    <button data-act="go" data-v="home" aria-label="ተመለስ">‹</button><h1>${esc(p.name)}</h1>
+    <button data-act="editp" data-id="${p.id}" aria-label="አርትዕ">✎</button></div></header>
+  <main class="wrap">
+    <div class="big ${cls(b)}"><small>${balLabel(b)}</small><b>${fmt(Math.abs(b))} ብር</b>
+      ${overdue(p.id) ? '<span class="badge">ጊዜው አልፏል</span>' : ''}</div>
+    ${p.phone ? `<div class="sub" style="margin-top:8px"><a href="tel:${esc(p.phone)}" style="color:inherit">☎ ${esc(p.phone)}</a></div>` : ''}
+    ${p.note ? `<div class="sub">${esc(p.note)}</div>` : ''}
+    <div class="acts">
+      <button class="btn p" data-act="quickpay" data-id="${p.id}">💸 ክፍያ</button>
+      <button class="btn" data-act="new" data-pid="${p.id}">+ ግብይት ጨምር</button>
+      <button class="btn" data-act="repeat" data-id="${p.id}">🔁 ባለፈው ድገም</button>
+      <button class="btn" data-act="pdfp" data-id="${p.id}">PDF / ማተም</button>
+      <button class="btn" style="grid-column:1/3" data-act="pcsv" data-id="${p.id}">📤 CSV ወደ Telegram</button>
+    </div>
+    <input id="pq" class="search" type="search" placeholder="በዚህ ሰው ዕቃ ፈልግ…" value="${esc(view.pq || '')}" autocomplete="off">${pqSummary(list)}
+    <h3>ታሪክ</h3>
+    ${withBal.slice().reverse().filter(x => personMatch(x.t)).map(({t, run}) => `
+      <button class="tx" data-act="edit" data-id="${t.id}">
+        <div class="l1"><span>${esc(t.item || LABEL[t.type])}${t.type === 'lend' || t.type === 'borrow' ? (t.qty && t.price ? ` <span class="sub">(${fmt(t.qty)} × ${fmt(t.price)})</span>` : '') : ''}${t.ctn ? ` <span class="sub">📦 ${fmt(t.ctn)} ካርቶን</span>` : ''}</span>
+          <span class="${SIGN[t.type] > 0 ? 'plus' : 'minus'}">${SIGN[t.type] > 0 ? '+' : '−'}${fmt(t.amount)}</span></div>
+        <div class="l2"><span><span class="tag ${t.type}">${LABEL[t.type]}</span> ${esc(t.date)}${t.method ? ' · ' + esc(t.method) : ''}${t.img ? ' · 📎' : ''}${t.due ? ' · ቀነ ገደብ ' + esc(t.due) + (t.due < t0 && Math.abs(b) > 0.005 ? ' ⚠' : '') : ''}</span>
+          <span>ቀሪ ${run < 0 ? '−' : ''}${fmt(Math.abs(run))}</span></div>
+        ${t.note ? `<div class="l2"><span>${esc(t.note)}</span></div>` : ''}
+      </button>`).join('') || '<div class="empty">ግብይት የለም</div>'}
+    <h3>&nbsp;</h3>
+    <button class="btn d" style="width:100%" data-act="delp" data-id="${p.id}">ይህን ሰው እና መዝገቡን ሰርዝ</button>
+  </main>${navHTML()}`;
+}
+
+function settingsHTML() {
+  const lb = db.lastBackup ? new Date(db.lastBackup).toLocaleString('en-GB') : 'እስካሁን አልተደረገም';
+  return `
+  <header class="top"><div class="wrap"><h1>ቅንብር</h1></div></header>
+  <main class="wrap">
+    ${isStandalone() ? '' : `<h3>መተግበሪያ</h3><div class="card"><p>አፑን ስልክህ ላይ እንደ መተግበሪያ ጫን፤ ከ Home screen በቀጥታ ይከፈታል።</p><button class="btn p" data-act="install">⬇ ጫን (Install)</button></div>`}
+    <h3>ለውጥ መመለስ</h3><div class="card"><p>የመጨረሻዎቹን ለውጦች (መጨመር፣ ማስተካከል፣ መሰረዝ፣ መመለስ) ወደ ኋላ ይመልሳል። አፑ እስኪዘጋ ድረስ ብቻ ይቆያል።</p><button class="btn" data-act="undo" ${undoStack.length ? '' : 'disabled'}>↩ የመጨረሻውን ለውጥ መልስ (${undoStack.length})</button></div>
+    <h3>ደህንነት</h3><div class="card">${cfg.pinHash ? `<p>🔒 PIN በርቷል። አፑ ሲከፈት እና ከ1 ደቂቃ በላይ ከወጡ በኋላ ሲመለሱ ይጠይቃል።</p><button class="btn" data-act="pinchg">PIN ቀይር</button><button class="btn d" data-act="pinoff">PIN አጥፋ</button>` : `<p>አፑ ሲከፈት PIN እንዲጠይቅ ያድርጉ፤ ስልክዎን ሌላ ሰው ቢይዘው መዝገቡን አያይም።</p><button class="btn p" data-act="pinset">🔒 PIN አዘጋጅ</button>`}</div>
+    <h3>ምትኬ (Backup)</h3>
+    <div class="card"><p>የመጨረሻ ምትኬ፡ ${esc(lb)}<br>መረጃው በዚህ ስልክ ውስጥ ብቻ ነው የሚቀመጠው። ስልክ ከጠፋ ወይም browser ከጸዳ ይጠፋል፤ ስለዚህ በየጊዜው ምትኬ ያውጡ።</p>
+      <button class="btn p" data-act="export">ምትኬ አውርድ (JSON)</button>
+      <button class="btn" data-act="import">ከምትኬ መልስ</button>
+      <button class="btn" data-act="csv">ወደ Excel/CSV አውጣ</button>
+      <input type="file" id="file" accept=".json,application/json" class="hidden"></div>
+    <h3>Telegram ምትኬ</h3>
+    <div class="card"><p>ምትኬውን ወደ Telegram ቡድንዎ ይላኩ። Token በዚህ ስልክ ውስጥ ብቻ ይቀመጣል — ለማንም አያሳዩ።</p>
+      <input id="tgt" placeholder="Bot token" value="${esc(cfg.token)}" autocomplete="off">
+      <input id="tgc" placeholder="Chat ID (ለምሳሌ -100123…)" value="${esc(cfg.chat)}" autocomplete="off">
+      <button class="btn" data-act="tgsave">አስቀምጥ</button>
+      <button class="btn" data-act="tgtest">ሙከራ መልእክት ላክ</button>
+      <button class="btn p" data-act="tgsend">አሁን ላክ</button>
+      <label style="display:flex;gap:8px;align-items:center;margin-top:10px;font-size:14px"><input type="checkbox" id="tga" style="width:auto;margin:0" ${cfg.auto ? 'checked' : ''}> ከእያንዳንዱ ለውጥ በኋላ በራስ-ሰር ምትኬ ላክ</label></div>
+    <h3>ማሳወቂያ</h3>
+    <div class="card"><p>ቀነ ገደብ ሲደርስ ወይም ሲያልፍ አፑ ሲከፈት ያሳውቃል። (${'Notification' in window ? 'ፈቃድ፡ ' + Notification.permission : 'ይህ browser አይደግፍም'})</p><button class="btn" data-act="notif">🔔 ማሳወቂያ አብራ</button></div>
+    <h3>አደገኛ</h3>
+    <div class="card"><button class="btn d" data-act="wipe">ሁሉንም መረጃ ሰርዝ</button></div>
+    <p class="sub" style="text-align:center;margin-top:20px">የእዳ መዝገብ · ከመስመር ውጭ ይሰራል</p>
+  </main>${navHTML()}`;
+}
+
+/* ---------- sheet (add / edit transaction) ---------- */
+function openTx(opts = {}) {
+  const t = opts.id ? db.tx.find(x => x.id === opts.id) : null;
+  const cur = t || {type: opts.type || 'lend', pid: opts.pid || (db.people[0] && db.people[0].id) || '__new', date: today(), item: '', qty: '', price: '', amount: '', method: opts.method || '', due: '', note: ''};
+  const isDebt = ty => ty === 'lend' || ty === 'borrow';
+  const ty = (k) => `<button type="button" class="${k} ${cur.type === k ? 'on' : ''}" data-ty="${k}">${LABEL[k]}<small>${HINT[k]}</small></button>`;
+  $('#sheet').innerHTML = `<div class="ov" id="ov"><form class="sheet" id="f" autocomplete="off">
+    <h2>${t ? 'ግብይት አርትዕ' : 'አዲስ ግብይት'}</h2>
+    <div class="types">${ty('lend')}${ty('borrow')}${ty('repay_in')}${ty('repay_out')}</div>
+    <button type="button" class="link" id="fsmsb" style="padding-left:0">📋 የባንክ መልእክት ለጥፍ</button>
+    <div id="smsw" class="hidden"><textarea id="fsms" rows="3" placeholder="የ cbe / abisinya / telebirr መልእክት እዚህ ይለጥፉ"></textarea><div id="smsr" class="sub" style="margin-top:4px"></div></div>
+    <label>ሰው</label>
+    <select id="fp">${db.people.map(p => `<option value="${p.id}" ${p.id === cur.pid ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}<option value="__new" ${cur.pid === '__new' ? 'selected' : ''}>+ አዲስ ሰው</option></select>
+    <div id="newp" class="g2 ${cur.pid === '__new' ? '' : 'hidden'}"><div><label>ስም</label><input id="fn" placeholder="ስም"></div><div><label>ስልክ (አማራጭ)</label><input id="fph" type="tel" inputmode="tel"></div></div>
+    <div class="g2"><div><label>ቀን</label><input id="fd" type="date" value="${esc(cur.date)}" required></div>
+      <div id="dueb"><label>ቀነ ገደብ (አማራጭ)</label><input id="fdue" type="date" value="${esc(cur.due || '')}"></div>
+      <div id="methb"><label>የክፍያ መንገድ</label><input id="fm" list="meths" placeholder="cbe, cash…" value="${esc(cur.method || '')}"><datalist id="meths"><option>cash</option><option>cbe</option><option>abisinya</option><option>telebirr</option><option>awash</option></datalist></div></div>
+    <div id="itemb"><label>ዕቃ / ምክንያት</label><input id="fi" list="items" value="${esc(cur.item || '')}" placeholder="ለምሳሌ ማዳበሪያ"><datalist id="items">${Object.values(itemInfo()).sort((a, b) => b.n - a.n).slice(0, 300).map(e => `<option value="${esc(e.name)}">`).join('')}</datalist></div>
+    <div id="ctnb" class="g2"><div><label>📦 ስንት ካርቶን</label><input id="fct" type="number" inputmode="decimal" step="any" min="0" value="${cur.ctn || ''}"></div><div><label>በአንድ ካርቶን ስንት</label><input id="fpc" type="number" inputmode="decimal" step="any" min="0" value="${cur.per || ''}"></div></div>
+    <div class="g2" id="qpb"><div><label>ብዛት</label><input id="fq" type="number" inputmode="decimal" step="any" min="0" value="${cur.qty || ''}"></div>
+      <div><label>የአንዱ ዋጋ</label><input id="fpr" type="number" inputmode="decimal" step="any" min="0" value="${cur.price || ''}"></div></div>
+    <div id="phint" class="sub" style="margin-top:4px"></div>
+    <button type="button" class="link hidden" id="fullb" style="padding-left:0"></button>
+    <label>ጠቅላላ መጠን (ብር)</label><input id="fa" class="total" type="number" inputmode="decimal" step="any" min="0" value="${cur.amount || ''}" required>
+    <label>ማስታወሻ (አማራጭ)</label><input id="fno" value="${esc(cur.note || '')}">
+    <label>📷 የደረሰኝ ፎቶ (አማራጭ)</label><input id="fimgf" type="file" accept="image/*"><div id="fimgp" style="margin-top:6px"></div>
+    <div class="acts" style="margin-top:16px"><button type="button" class="btn" id="fc">ዝጋ</button><button class="btn p">አስቀምጥ</button></div>
+    ${t ? '<button type="button" class="btn d" id="fdel" style="width:100%;margin-top:8px">ሰርዝ</button>' : ''}
+  </form></div>`;
+  let type = cur.type;
+  const sync = () => {
+    const d = isDebt(type);
+    $('#qpb').classList.toggle('hidden', !d); $('#ctnb').classList.toggle('hidden', !d); $('#itemb').classList.toggle('hidden', !d);
+    $('#dueb').classList.toggle('hidden', !d); $('#methb').classList.toggle('hidden', d);
+    document.querySelectorAll('.types button').forEach(b => b.classList.toggle('on', b.dataset.ty === type));
+    const pid0 = $('#fp').value, bal0 = pid0 !== '__new' ? balanceOf(pid0) : 0;
+    $('#fullb').classList.toggle('hidden', d || Math.abs(bal0) < 0.005); $('#fullb').textContent = `ሙሉ ቀሪውን ሙላ (${fmt(Math.abs(bal0))})`;
+  };
+  sync();
+  document.querySelectorAll('.types button').forEach(b => b.onclick = () => { type = b.dataset.ty; sync(); });
+  $('#fp').onchange = e => { $('#newp').classList.toggle('hidden', e.target.value !== '__new'); sync(); };
+  $('#fullb').onclick = () => { $('#fa').value = Math.abs(balanceOf($('#fp').value)); };
+  const calc = () => { const q = parseFloat($('#fq').value), p = parseFloat($('#fpr').value); if (q > 0 && p > 0) $('#fa').value = +(q * p).toFixed(2); };
+  const calcC = () => { const c = parseFloat($('#fct').value), pc = parseFloat($('#fpc').value); if (c > 0 && pc > 0) { $('#fq').value = +(c * pc).toFixed(2); calc(); } };
+  const hint = () => { const m = itemInfo()[$('#fi').value.trim().toLowerCase()], pr = parseFloat($('#fpr').value); $('#phint').textContent = m && m.price ? (pr && pr !== m.price ? `ባለፈው ${fmt(m.price)} ነበር (${pr > m.price ? '▲ +' : '▼ −'}${fmt(Math.abs(pr - m.price))})` : `ባለፈው ዋጋ፡ ${fmt(m.price)}`) : ''; };
+  $('#fq').oninput = calc; $('#fpr').oninput = () => { calc(); hint(); }; $('#fct').oninput = calcC; $('#fpc').oninput = calcC;
+  $('#fi').addEventListener('input', hint);
+  $('#fi').addEventListener('change', () => { const m = itemInfo()[$('#fi').value.trim().toLowerCase()]; if (m) { if (m.price && !$('#fpr').value) { $('#fpr').value = m.price; calc(); } if (m.per && !$('#fpc').value) { $('#fpc').value = m.per; calcC(); } } hint(); });
+  hint();
+  $('#fc').onclick = closeSheet;
+  $('#ov').addEventListener('click', e => { if (e.target.id === 'ov') closeSheet(); });
+  $('#fsmsb').onclick = async () => {
+    $('#smsw').classList.toggle('hidden');
+    if (!$('#smsw').classList.contains('hidden')) { $('#fsms').focus(); try { const c = await navigator.clipboard.readText(); if (c && parseBankSMS(c).amount && !$('#fsms').value) { $('#fsms').value = c; $('#fsms').dispatchEvent(new Event('input')); } } catch (e) {} }
+  };
+  $('#fsms').addEventListener('input', () => {
+    const r = parseBankSMS($('#fsms').value);
+    if (!r.amount) { $('#smsr').textContent = 'መጠን አልተገኘም'; return; }
+    $('#fa').value = r.amount; if (r.date) $('#fd').value = r.date; if (r.bank) $('#fm').value = r.bank;
+    if (r.ref && !$('#fno').value) $('#fno').value = 'Ref: ' + r.ref;
+    if (r.dir) { type = r.dir; sync(); }
+    $('#smsr').textContent = `✓ ${fmt(r.amount)} ብር${r.date ? ' · ' + r.date : ''}${r.bank ? ' · ' + r.bank : ''}${r.dir ? ' · ' + LABEL[r.dir] : ''} — ያረጋግጡ`;
+  });
+  let newImg = null, delImg = false;
+  const showImg = async () => {
+    const src = newImg || (t && t.img && !delImg ? await imgGet(t.img) : null);
+    $('#fimgp').innerHTML = src ? `<img src="${src}" alt="" style="max-width:120px;max-height:120px;border-radius:8px;vertical-align:middle;cursor:pointer" id="fimgt"> <button type="button" class="link" id="fimgx">አጥፋ</button>` : '';
+    if (src) { $('#fimgt').onclick = () => viewImg(src); $('#fimgx').onclick = () => { newImg = null; delImg = true; showImg(); }; }
+  };
+  $('#fimgf').onchange = async e => { const f = e.target.files[0]; if (!f) return; try { newImg = await compressImg(f); delImg = false; showImg(); } catch (err) { toast('ፎቶውን ማንበብ አልተቻለም'); } };
+  showImg();
+  if (t) $('#fdel').onclick = () => { if (confirm('ይህ ግብይት ይሰረዝ?')) { toTrash({kind: 'tx', rec: t}); db.tx = db.tx.filter(x => x.id !== t.id); save(); closeSheet(); render(); toast('ወደ ታሪክ ተወስዷል'); } };
+  $('#f').onsubmit = async e => {
+    e.preventDefault();
+    const amount = parseFloat($('#fa').value);
+    if (!(amount > 0)) return toast('መጠን ያስገቡ');
+    let pid = $('#fp').value;
+    if (pid === '__new') {
+      const name = $('#fn').value.trim(); if (!name) return toast('የሰውየውን ስም ያስገቡ');
+      const np = {id: uid(), name, phone: $('#fph').value.trim(), note: ''};
+      db.people.push(np); pid = np.id;
+    }
+    const d = isDebt(type);
+    const rec = {id: t ? t.id : uid(), pid, type, date: $('#fd').value || today(),
+      item: d ? $('#fi').value.trim() : '', qty: d ? parseFloat($('#fq').value) || 0 : 0, price: d ? parseFloat($('#fpr').value) || 0 : 0, ctn: d ? parseFloat($('#fct').value) || 0 : 0, per: d ? parseFloat($('#fpc').value) || 0 : 0,
+      amount, method: d ? '' : $('#fm').value.trim(), due: d ? $('#fdue').value : '', note: $('#fno').value.trim()};
+    rec.img = t && t.img && !delImg ? t.img : '';
+    try { if (delImg && t && t.img) await imgDel(t.img); if (newImg) { rec.img = 'i' + rec.id; await imgPut(rec.img, newImg); } } catch (err) { rec.img = ''; toast('ፎቶ አልተቀመጠም'); }
+    if (t) db.tx[db.tx.findIndex(x => x.id === t.id)] = rec; else db.tx.push(rec);
+    save(); closeSheet(); view = {...view, name: 'person', pid}; render(); toast('ተቀምጧል');
+  };
+}
+const closeSheet = () => { $('#sheet').innerHTML = ''; };
+
+function editPerson(id) {
+  const p = person(id);
+  $('#sheet').innerHTML = `<div class="ov" id="ov"><form class="sheet" id="f">
+    <h2>መረጃ አርትዕ</h2>
+    <label>ስም</label><input id="fn" value="${esc(p.name)}" required>
+    <label>ስልክ</label><input id="fph" type="tel" value="${esc(p.phone || '')}">
+    <label>ማስታወሻ</label><input id="fno" value="${esc(p.note || '')}">
+    <div class="acts" style="margin-top:16px"><button type="button" class="btn" id="fc">ዝጋ</button><button class="btn p">አስቀምጥ</button></div></form></div>`;
+  $('#fc').onclick = closeSheet;
+  $('#ov').addEventListener('click', e => { if (e.target.id === 'ov') closeSheet(); });
+  $('#f').onsubmit = e => { e.preventDefault(); p.name = $('#fn').value.trim() || p.name; p.phone = $('#fph').value.trim(); p.note = $('#fno').value.trim(); save(); closeSheet(); render(); };
+}
+
+/* ---------- statement / export ---------- */
+function download(name, text, mime) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([text], {type: mime})); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+}
+async function backupBlob(withImages) {
+  const images = {};
+  if (withImages) for (const t of [...db.tx, ...(db.trash || []).flatMap(e => e.kind === 'tx' ? [e.rec] : e.txs || [])]) { if (t.img && !images[t.img]) { const v = await imgGet(t.img); if (v) images[t.img] = v; } }
+  return new Blob([JSON.stringify({app: 'edha', v: 1, at: new Date().toISOString(), people: db.people, tx: db.tx, trash: db.trash || [], images})], {type: 'application/json'});
+}
+function csv() {
+  const rows = [['ቀን', 'ሰው', 'አይነት', 'ዕቃ', 'ካርቶን', 'ብዛት', 'የአንዱ ዋጋ', 'መጠን', 'መንገድ', 'ቀነ ገደብ', 'ማስታወሻ', 'ቀሪ']];
+  db.people.forEach(p => { let run = 0; txOf(p.id).forEach(t => { run += SIGN[t.type] * t.amount;
+    rows.push([t.date, p.name, LABEL[t.type], t.item, t.ctn || '', t.qty || '', t.price || '', SIGN[t.type] * t.amount, t.method, t.due, t.note, run]); }); });
+  return '\ufeff' + rows.map(r => r.map(c => `"${String(c ?? '').replace(/"/g, '""')}"`).join(',')).join('\n');
+}
+
+/* ---------- item names (remembered automatically) & search ---------- */
+function itemInfo() {
+  const m = {};
+  db.tx.slice().sort((a, b) => (a.date + a.id).localeCompare(b.date + b.id)).forEach(t => {
+    const nm = (t.item || '').trim(); if (!nm || (t.type !== 'lend' && t.type !== 'borrow')) return;
+    const e = m[nm.toLowerCase()] || (m[nm.toLowerCase()] = {name: nm, n: 0, price: 0, per: 0});
+    e.n++; e.name = nm; if (t.price) e.price = t.price; if (t.per) e.per = t.per;
+  });
+  return m;
+}
+function itemHits(hits) {
+  if (!hits.length) return '';
+  return `<h3>ዕቃዎች (${hits.length})</h3>` + hits.map(t => `<button class="tx" data-act="open" data-id="${t.pid}"><div class="l1"><span>${esc(t.item)}${t.ctn ? ` <span class="sub">📦 ${fmt(t.ctn)}</span>` : ''}</span><span class="${SIGN[t.type] > 0 ? 'plus' : 'minus'}">${SIGN[t.type] > 0 ? '+' : '−'}${fmt(t.amount)}</span></div><div class="l2"><span><span class="tag ${t.type}">${LABEL[t.type]}</span> ${esc(t.date)}${t.qty && t.price ? ` · ${fmt(t.qty)} × ${fmt(t.price)}` : ''}</span><span>${esc((person(t.pid) || {}).name)}</span></div></button>`).join('');
+}
+const personMatch = t => { const q = (view.pq || '').trim().toLowerCase(); return !q || [t.item, t.method, t.note, t.date].join(' ').toLowerCase().includes(q); };
+function pqSummary(list) {
+  if (!(view.pq || '').trim()) return '';
+  const m = list.filter(personMatch), d = m.filter(t => t.type === 'lend' || t.type === 'borrow');
+  return `<div class="sub" style="margin-top:6px">${m.length} ውጤት · 📦 ${fmt(d.reduce((s, t) => s + (t.ctn || 0), 0))} ካርቶን · ድምር ${fmt(d.reduce((s, t) => s + t.amount, 0))} ብር</div>`;
+}
+
+/* ---------- undo ---------- */
+let undoTimer = null;
+function showUndoBar() {
+  let b = $('#undo'); if (!b) { b = document.createElement('div'); b.id = 'undo'; b.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:45;background:#222;color:#fff;border-radius:99px;padding:6px 8px 6px 16px;display:flex;gap:10px;align-items:center;font-size:14px;box-shadow:0 4px 14px rgba(0,0,0,.3)'; b.innerHTML = '<span>ለውጥ ተደርጓል</span><button data-act="undo" style="background:var(--gold);color:#2a2008;border:0;border-radius:99px;padding:6px 14px;font-weight:700">↩ መልስ</button>'; document.body.appendChild(b); }
+  clearTimeout(undoTimer); undoTimer = setTimeout(() => { const x = $('#undo'); if (x) x.remove(); }, 8000);
+}
+function doUndo() {
+  const s = undoStack.pop(); if (!s) return toast('የሚመለስ ነገር የለም');
+  const o = JSON.parse(s); db.people = o.people; db.tx = o.tx; db.trash = o.trash; prevState = snap();
+  try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (e) {}
+  scheduleTg(); const b = $('#undo'); if (b) b.remove(); closeSheet(); render(); toast('↩ ተመልሷል');
+}
+
+/* ---------- monthly chart ---------- */
+function monthChart() {
+  const now = new Date(), ms = [];
+  for (let i = 5; i >= 0; i--) { const d = new Date(now.getFullYear(), now.getMonth() - i, 1); ms.push(d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0')); }
+  const data = ms.map(m => { const o = {borrow: 0, repay_out: 0, lend: 0, repay_in: 0}; db.tx.forEach(t => { if (t.date.slice(0, 7) === m) o[t.type] += t.amount; }); return o; });
+  const keys = ['borrow', 'repay_out', 'lend', 'repay_in'], col = {borrow: '#b3402e', repay_out: '#1d7a4c', lend: '#c28a1b', repay_in: '#2a6fb0'};
+  const use = keys.filter(k => data.some(o => o[k] > 0)); if (!use.length) return '';
+  const max = Math.max(...data.flatMap(o => use.map(k => o[k]))), W = 360, H = 170, gw = W / 6, bw = Math.min(16, (gw - 10) / use.length);
+  const bars = data.map((o, i) => use.map((k, j) => { const hh = Math.max(1, o[k] / max * (H - 44)), x = i * gw + (gw - bw * use.length) / 2 + j * bw; return o[k] > 0 ? `<rect x="${x.toFixed(1)}" y="${(H - 22 - hh).toFixed(1)}" width="${(bw - 2).toFixed(1)}" height="${hh.toFixed(1)}" rx="2" fill="${col[k]}"/>` : ''; }).join('') + `<text x="${(i * gw + gw / 2).toFixed(1)}" y="${H - 6}" font-size="11" text-anchor="middle" fill="currentColor">${ms[i].slice(2)}</text>`).join('');
+  const legend = use.map(k => `<span style="margin-right:10px;white-space:nowrap"><span style="display:inline-block;width:10px;height:10px;background:${col[k]};border-radius:2px"></span> ${LABEL[k]}</span>`).join('');
+  return `<div style="margin:8px 0"><div style="font-size:13px;margin-bottom:4px">የመጨረሻ 6 ወር (yy-mm) · ከፍተኛ ${fmt(max)}</div><svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:520px"><line x1="0" y1="${H - 22}" x2="${W}" y2="${H - 22}" stroke="currentColor" opacity=".3"/>${bars}</svg><div style="font-size:13px">${legend}</div></div>`;
+}
+
+/* ---------- bank SMS parser ---------- */
+function parseBankSMS(s) {
+  const t = String(s || ''), low = t.toLowerCase(), out = {};
+  const re = /\b(?:ETB|Birr)\b\s*(\d[\d,]*(?:\.\d+)?)|ብር\s*(\d[\d,]*(?:\.\d+)?)|(\d[\d,]*(?:\.\d+)?)\s*(?:\b(?:ETB|Birr)\b|ብር)/gi; let m;
+  while ((m = re.exec(t))) {
+    if (/balance|ቀሪ|charge|fee|vat|commission/i.test(t.slice(Math.max(0, m.index - 35), m.index))) continue;
+    const v = parseFloat((m[1] || m[2] || m[3]).replace(/,/g, '')); if (v > 0) { out.amount = v; break; }
+  }
+  let d = t.match(/(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/), y, mo, da;
+  if (d) { y = +d[1]; mo = +d[2]; da = +d[3]; } else if ((d = t.match(/(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/))) { da = +d[1]; mo = +d[2]; y = +d[3]; if (mo > 12 && da <= 12) [da, mo] = [mo, da]; }
+  if (y >= 2000 && y < 2100 && mo >= 1 && mo <= 12 && da >= 1 && da <= 31) out.date = `${y}-${String(mo).padStart(2, '0')}-${String(da).padStart(2, '0')}`;
+  const banks = [[/telebirr|tele birr|ቴሌብር/, 'telebirr'], [/abyssinia|abisinya|\bboa\b/, 'abisinya'], [/commercial bank|\bcbe\b|cbebirr|cbe birr/, 'cbe'], [/awash/, 'awash'], [/oromia|\bcbo\b/, 'cbo'], [/dashen/, 'dashen'], [/zemen/, 'zemen']];
+  for (const [r, n] of banks) if (r.test(low)) { out.bank = n; break; }
+  const o = low.search(/debited|transferred|transfered|\bsent\b|\bpaid\b|withdr|ተልኳል|ተላልፏል|ከፍለዋል/), i = low.search(/credited|received|deposit|ደርሶታል|ገቢ/);
+  if (o >= 0 && (i < 0 || o < i)) out.dir = 'repay_out'; else if (i >= 0) out.dir = 'repay_in';
+  const rf = t.match(/\b(?:ref(?:erence)?(?:\s*(?:no|number|#))?|transaction\s*(?:number|id|no)|receipt\s*no)\b[:.\s#-]*([A-Z0-9]{6,})/i) || t.match(/\b(FT[A-Z0-9]{8,})\b/);
+  if (rf) out.ref = rf[1];
+  return out;
+}
+
+/* ---------- receipt photos (IndexedDB) ---------- */
+const idb = () => new Promise((res, rej) => { const r = indexedDB.open('edha_img', 1); r.onupgradeneeded = () => r.result.createObjectStore('i'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); });
+const imgPut = async (k, v) => { const d = await idb(); return new Promise((res, rej) => { const x = d.transaction('i', 'readwrite'); x.objectStore('i').put(v, k); x.oncomplete = res; x.onerror = () => rej(x.error); }); };
+const imgGet = async k => { try { const d = await idb(); return await new Promise(res => { const r = d.transaction('i').objectStore('i').get(k); r.onsuccess = () => res(r.result || null); r.onerror = () => res(null); }); } catch (e) { return null; } };
+const imgDel = async k => { const d = await idb(); return new Promise(res => { const x = d.transaction('i', 'readwrite'); x.objectStore('i').delete(k); x.oncomplete = res; x.onerror = res; }); };
+const compressImg = file => new Promise((res, rej) => {
+  const fr = new FileReader();
+  fr.onload = () => { const im = new Image(); im.onload = () => { const s = Math.min(1, 900 / Math.max(im.width, im.height)), c = document.createElement('canvas'); c.width = Math.round(im.width * s); c.height = Math.round(im.height * s); c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); res(c.toDataURL('image/jpeg', 0.65)); }; im.onerror = rej; im.src = fr.result; };
+  fr.onerror = rej; fr.readAsDataURL(file);
+});
+function viewImg(src) {
+  const d = document.createElement('div'); d.style.cssText = 'position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:10px';
+  d.innerHTML = `<img src="${src}" alt="" style="max-width:100%;max-height:100%;object-fit:contain">`; d.onclick = () => d.remove(); document.body.appendChild(d);
+}
+
+/* ---------- repeat last purchase ---------- */
+function openRepeat(pid) {
+  const rows = txOf(pid).filter(t => (t.type === 'borrow' || t.type === 'lend') && t.item);
+  if (!rows.length) return toast('የሚደገም ግብይት የለም');
+  const last = rows[rows.length - 1], grp = rows.filter(t => t.date === last.date && t.type === last.type);
+  $('#sheet').innerHTML = `<div class="ov" id="ov"><form class="sheet" id="f"><h2>🔁 ባለፈው ድገም</h2><div class="sub">${esc(last.date)} · ${LABEL[last.type]} — ዛሬ እንደ አዲስ ይመዘገባል</div>
+  ${grp.map((t, i) => `<label style="display:flex;gap:10px;align-items:center;color:var(--ink);font-size:15px"><input type="checkbox" data-i="${i}" checked style="width:auto"><span style="flex:1">${esc(t.item)}${t.ctn ? ` · 📦 ${fmt(t.ctn)}` : ''}${t.price ? ` · ${fmt(t.qty)} × ${fmt(t.price)}` : ''}</span><b>${fmt(t.amount)}</b></label>`).join('')}
+  <div class="acts" style="margin-top:16px"><button type="button" class="btn" id="fc">ዝጋ</button><button class="btn p">ድገም</button></div></form></div>`;
+  $('#fc').onclick = closeSheet; $('#ov').addEventListener('click', e => { if (e.target.id === 'ov') closeSheet(); });
+  $('#f').onsubmit = e => {
+    e.preventDefault();
+    const picked = [...document.querySelectorAll('#f input[type=checkbox]')].filter(c => c.checked).map(c => grp[+c.dataset.i]); if (!picked.length) return;
+    picked.forEach(t => db.tx.push({...t, id: uid(), date: today(), due: '', note: '', img: ''}));
+    save(); closeSheet(); render(); toast(`${picked.length} ግብይት ተጨምሯል ✓`);
+  };
+}
+function quickPay(pid) {
+  const b = balanceOf(pid), last = txOf(pid).filter(t => (t.type === 'repay_out' || t.type === 'repay_in') && t.method).pop();
+  openTx({pid, type: b > 0.005 ? 'repay_in' : 'repay_out', method: last ? last.method : ''});
+}
+
+/* ---------- items: summary & price history ---------- */
+function itemStats() {
+  const m = {};
+  db.tx.slice().sort((a, b) => (a.date + a.id).localeCompare(b.date + b.id)).forEach(t => {
+    const nm = (t.item || '').trim(); if (!nm || (t.type !== 'lend' && t.type !== 'borrow')) return;
+    const k = nm.toLowerCase(), s = m[k] || (m[k] = {key: k, name: nm, n: 0, ctn: 0, amt: 0, pq: 0, pa: 0, last: 0, prev: 0, min: 0, max: 0, rows: []});
+    s.name = nm; s.n++; s.ctn += t.ctn || 0; s.amt += t.amount; s.rows.push(t);
+    if (t.price > 0) { if (t.price !== s.last) s.prev = s.last; s.last = t.price; s.min = s.min ? Math.min(s.min, t.price) : t.price; s.max = Math.max(s.max, t.price); if (t.qty) { s.pq += t.qty; s.pa += t.qty * t.price; } }
+  });
+  return m;
+}
+const priceArrow = s => s.prev && s.last !== s.prev ? ` <span style="color:var(--${s.last > s.prev ? 'out' : 'in'})">${s.last > s.prev ? '▲' : '▼'}${fmt(Math.abs(s.last - s.prev))}</span>` : '';
+function itemsHTML() {
+  const q = (view.iq || '').trim().toLowerCase();
+  const st = Object.values(itemStats()).filter(s => !q || s.name.toLowerCase().includes(q)).sort((a, b) => b.amt - a.amt).slice(0, 250);
+  return `<header class="top"><div class="wrap"><button data-act="go" data-v="report" aria-label="ተመለስ">‹</button><h1>ዕቃዎች</h1></div></header><main class="wrap">
+  <input id="iq" class="search" type="search" placeholder="ዕቃ ፈልግ…" value="${esc(view.iq || '')}" autocomplete="off">
+  ${st.map(s => `<button class="tx" data-act="item" data-k="${esc(s.key)}"><div class="l1"><span>${esc(s.name)}</span><span>${fmt(s.amt)}</span></div><div class="l2"><span>${s.n} ጊዜ · 📦 ${fmt(s.ctn)} ካርቶን</span><span>${s.last ? 'ዋጋ ' + fmt(s.last) + priceArrow(s) : ''}</span></div></button>`).join('') || '<div class="empty">ዕቃ የለም</div>'}
+  </main>${navHTML()}`;
+}
+function openItem(k) {
+  const s = itemStats()[k]; if (!s) return;
+  $('#sheet').innerHTML = `<div class="ov" id="ov"><div class="sheet"><h2>${esc(s.name)}</h2>
+  <div class="sub">${s.n} ጊዜ · 📦 ${fmt(s.ctn)} ካርቶን · ጠቅላላ ${fmt(s.amt)} ብር</div>
+  ${s.last ? `<div class="sub">ዋጋ፦ የመጨረሻ ${fmt(s.last)}${priceArrow(s)} · ዝቅተኛ ${fmt(s.min)} · ከፍተኛ ${fmt(s.max)}${s.pq ? ' · አማካይ ' + fmt(Math.round(s.pa / s.pq * 100) / 100) : ''}</div>` : ''}
+  <h3>ታሪክ</h3>${s.rows.slice().reverse().map(t => `<div class="tx"><div class="l1"><span>${esc((person(t.pid) || {}).name)}${t.ctn ? ` <span class="sub">📦 ${fmt(t.ctn)}</span>` : ''}</span><span>${fmt(t.amount)}</span></div><div class="l2"><span><span class="tag ${t.type}">${LABEL[t.type]}</span> ${esc(t.date)}</span><span>${t.price ? `${fmt(t.qty)} × ${fmt(t.price)}` : ''}</span></div></div>`).join('')}
+  <button class="btn p" style="width:100%;margin-top:12px" id="fc">ዝጋ</button></div></div>`;
+  $('#fc').onclick = closeSheet; $('#ov').addEventListener('click', e => { if (e.target.id === 'ov') closeSheet(); });
+}
+
+/* ---------- PIN lock ---------- */
+const sha = async s => { try { const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join(''); } catch (e) { let h = 5381; for (const c of s) h = (h * 33 + c.charCodeAt(0)) >>> 0; return 'x' + h; } };
+const checkPin = async pin => (await sha(cfg.pinSalt + pin)) === cfg.pinHash;
+let pinFails = 0, hiddenAt = 0;
+function showLock() {
+  if ($('#lock')) return;
+  const d = document.createElement('div'); d.id = 'lock';
+  d.style.cssText = 'position:fixed;inset:0;z-index:100;background:var(--head);color:var(--headink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;text-align:center';
+  d.innerHTML = '<div style="font-size:44px">🔒</div><h2 style="margin:0">የእዳ መዝገብ</h2><p id="lm" style="margin:0;opacity:.85">PIN ያስገቡ</p><input id="lp" type="password" inputmode="numeric" autocomplete="off" maxlength="8" style="font-size:28px;text-align:center;letter-spacing:10px;width:210px;padding:10px;border-radius:12px;border:0;background:#fff;color:#111">';
+  document.body.appendChild(d);
+  const inp = $('#lp'), msg = $('#lm'); inp.focus();
+  inp.addEventListener('input', async () => {
+    if (inp.value.length < cfg.pinLen) return;
+    if (await checkPin(inp.value)) { d.remove(); pinFails = 0; notifyDue(); return; }
+    inp.value = ''; pinFails++;
+    if (pinFails >= 5) { inp.disabled = true; msg.textContent = 'ብዙ ሙከራ — 30 ሰከንድ ይጠብቁ'; setTimeout(() => { inp.disabled = false; pinFails = 0; msg.textContent = 'PIN ያስገቡ'; inp.focus(); }, 30000); }
+    else msg.textContent = `PIN ትክክል አይደለም (${5 - pinFails} ሙከራ ቀርቷል)`;
+  });
+}
+async function pinAction(kind) {
+  if (kind !== 'set') { const cur = prompt('አሁን ያለውን PIN ያስገቡ'); if (cur === null) return; if (!(await checkPin(cur.trim()))) return toast('PIN ትክክል አይደለም'); }
+  if (kind === 'off') { delete cfg.pinHash; delete cfg.pinSalt; delete cfg.pinLen; saveCfg(); render(); return toast('PIN ጠፍቷል'); }
+  const a = prompt('4–6 ቁጥር PIN ያዘጋጁ (ቁጥር ብቻ)\n⚠ PIN ከረሱ መመለስ አይቻልም፤ ስለዚህ መጀመሪያ ምትኬ ያውርዱ'); if (a === null) return;
+  if (!/^\d{4,6}$/.test(a.trim())) return toast('4–6 ቁጥር ብቻ ያስገቡ');
+  const b = prompt('PIN እንደገና ያስገቡ'); if (b === null) return;
+  if (a.trim() !== b.trim()) return toast('አልተመሳሰለም');
+  cfg.pinSalt = uid(); cfg.pinHash = await sha(cfg.pinSalt + a.trim()); cfg.pinLen = a.trim().length; saveCfg(); render(); toast('🔒 PIN ተዘጋጅቷል');
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) hiddenAt = Date.now();
+  else if (cfg.pinHash && hiddenAt && Date.now() - hiddenAt > 60000) showLock();
+});
+
+/* ---------- trash ---------- */
+function toTrash(item) { db.trash = db.trash || []; db.trash.unshift({id: uid(), at: Date.now(), ...item}); }
+function restoreTrash(id) {
+  const e = (db.trash || []).find(x => x.id === id); if (!e) return;
+  if (e.kind === 'person') { if (!person(e.person.id)) db.people.push(e.person); e.txs.forEach(t => { if (!db.tx.some(x => x.id === t.id)) db.tx.push(t); }); }
+  else { if (!person(e.rec.pid)) return toast('መጀመሪያ ሰውየውን ከታሪክ መልስ'); db.tx.push(e.rec); }
+  db.trash = db.trash.filter(x => x.id !== id); save(); render(); toast('ተመልሷል ✓');
+}
+function trashHTML() {
+  const tr = db.trash || [], dt = e => new Date(e.at).toLocaleDateString('en-GB');
+  const btns = e => `<span><button class="link" data-act="trestore" data-id="${e.id}">መልስ</button><button class="link" data-act="tperm" data-id="${e.id}">ሰርዝ</button></span>`;
+  return `<header class="top"><div class="wrap"><h1>ታሪክ (የተሰረዙ)</h1></div></header><main class="wrap">
+  ${tr.map(e => e.kind === 'person'
+    ? `<div class="tx"><div class="l1"><span>👤 ${esc(e.person.name)}</span><span>${e.txs.length} ግብይት</span></div><div class="l2"><span>${dt(e)}</span>${btns(e)}</div></div>`
+    : `<div class="tx"><div class="l1"><span>${esc(e.rec.item || e.rec.method || LABEL[e.rec.type])} · ${esc((person(e.rec.pid) || {}).name || '—')}</span><span>${fmt(e.rec.amount)}</span></div><div class="l2"><span>${LABEL[e.rec.type]} · ${esc(e.rec.date)}</span>${btns(e)}</div></div>`).join('') || '<div class="empty">ምንም የተሰረዘ የለም</div>'}
+  ${tr.length ? '<button class="btn d" style="width:100%;margin-top:14px" data-act="tempty">ታሪኩን ሁሉ አጽዳ</button>' : ''}
+  </main>${navHTML()}`;
+}
+
+/* ---------- due alerts ---------- */
+function dueItems() {
+  const t0 = today(), lim = new Date(Date.now() + 3 * 864e5 - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  return db.tx.filter(t => { if (!t.due || t.due > lim || !person(t.pid)) return false; const b = balanceOf(t.pid); return (t.type === 'lend' && b > 0.005) || (t.type === 'borrow' && b < -0.005); })
+    .sort((a, b) => a.due.localeCompare(b.due)).map(t => ({t, late: t.due < t0}));
+}
+function dueBanner() {
+  const d = dueItems(); if (!d.length) return '';
+  return `<div class="card" style="background:var(--warn-bg);color:var(--warn)"><b>⏰ ቀነ ገደብ የደረሰ / ያለፈ (${d.length})</b>${d.slice(0, 5).map(({t, late}) => `<div style="font-size:14px;margin-top:4px">${late ? '⚠ ' : ''}${esc((person(t.pid) || {}).name)} · ${fmt(t.amount)} · ${esc(t.due)} · ${t.type === 'lend' ? 'ይከፍለኛል' : 'እከፍለዋለሁ'}</div>`).join('')}</div>`;
+}
+async function notifyDue() {
+  try {
+    if (!('Notification' in window) || Notification.permission !== 'granted' || cfg.lastNotif === today()) return;
+    const d = dueItems(); if (!d.length) return;
+    const body = d.slice(0, 3).map(({t}) => `${(person(t.pid) || {}).name}: ${fmt(t.amount)}`).join('\n') + (d.length > 3 ? `\n+${d.length - 3}` : '');
+    const reg = navigator.serviceWorker && await navigator.serviceWorker.getRegistration();
+    if (reg) await reg.showNotification('የእዳ መዝገብ — ቀነ ገደብ', {body}); else new Notification('የእዳ መዝገብ — ቀነ ገደብ', {body});
+    cfg.lastNotif = today(); saveCfg();
+  } catch (e) {}
+}
+
+/* ---------- report / print ---------- */
+function reportData() {
+  const r = view.range || '30', cut = r === 'all' ? '' : new Date(Date.now() - (+r) * 864e5).toISOString().slice(0, 10);
+  const tx = db.tx.filter(t => !cut || t.date >= cut), months = {}, s = {lend: 0, borrow: 0, repay_in: 0, repay_out: 0};
+  tx.forEach(t => { s[t.type] += t.amount; if (t.ctn) s['c_' + t.type] = (s['c_' + t.type] || 0) + t.ctn; const m = t.date.slice(0, 7); (months[m] = months[m] || {lend: 0, borrow: 0, repay_in: 0, repay_out: 0})[t.type] += t.amount; });
+  return {s, months};
+}
+function reportBody(d) {
+  const T = totals(), ppl = db.people.map(p => ({p, b: balanceOf(p.id)}));
+  const top = f => ppl.filter(f).sort((a, b) => Math.abs(b.b) - Math.abs(a.b)).slice(0, 5).map(x => `<tr><td>${esc(x.p.name)}</td><td class="n">${fmt(Math.abs(x.b))}</td></tr>`).join('') || '<tr><td colspan="2">—</td></tr>';
+  const mrows = Object.keys(d.months).sort().reverse().map(m => { const x = d.months[m]; return `<tr><td>${m}</td><td class="n">${fmt(x.borrow)}</td><td class="n">${fmt(x.repay_out)}</td><td class="n">${fmt(x.lend)}</td><td class="n">${fmt(x.repay_in)}</td></tr>`; }).join('');
+  return monthChart() + `<table><tr><th>አይነት</th><th>መጠን</th></tr>${['borrow', 'repay_out', 'lend', 'repay_in'].map(k => `<tr><td>${LABEL[k]}</td><td class="n">${fmt(d.s[k])}</td></tr>`).join('')}<tr><td>📦 ካርቶን ገባ (ወሰድኩ)</td><td class="n">${fmt(d.s.c_borrow || 0)}</td></tr><tr><td>📦 ካርቶን ወጣ (ሰጠሁ)</td><td class="n">${fmt(d.s.c_lend || 0)}</td></tr></table>
+  <table><tr><th>ወር</th><th>ወሰድኩ</th><th>ከፈልኩ</th><th>ሰጠሁ</th><th>ተቀበልኩ</th></tr>${mrows || '<tr><td colspan="5">—</td></tr>'}</table>
+  <h3>ባለእዳዎቼ (ይከፍሉኛል) — ምርጥ 5</h3><table>${top(x => x.b > 0.005)}</table>
+  <h3>አበዳሪዎቼ (እከፍላለሁ) — ምርጥ 5</h3><table>${top(x => x.b < -0.005)}</table>
+  <p>ሊሰበሰብ፡ ${fmt(T.inn)} · መክፈል፡ ${fmt(T.out)} · ልዩነት፡ ${fmt(T.net)} ብር</p>`;
+}
+function reportHTML() {
+  const r = view.range || '30', chip = (k, t) => `<button class="chip ${r === k ? 'on' : ''}" data-act="range" data-k="${k}">${t}</button>`;
+  return `<header class="top"><div class="wrap"><h1>ሪፖርት</h1></div></header><main class="wrap rep">
+  <div class="chips">${chip('30', '30 ቀን')}${chip('90', '90 ቀን')}${chip('all', 'ሁሉም')}</div>
+  <button class="btn p" style="width:100%" data-act="go" data-v="items">📦 ዕቃዎች — ዋጋ ታሪክ እና ማጠቃለያ</button>${reportBody(reportData())}
+  <div class="acts"><button class="btn p" data-act="pdfr">PDF / ማተም</button><button class="btn" data-act="csv">CSV</button></div></main>${navHTML()}`;
+}
+function printDoc(title, body) {
+  const w = window.open('', '_blank'); if (!w) return toast('Popup ታግዷል — ፍቀድና ደግም ሞክር');
+  w.document.write(`<!DOCTYPE html><html lang="am"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><style>body{font-family:'Noto Sans Ethiopic',system-ui,sans-serif;padding:18px;color:#111}h1{font-size:20px}h3{font-size:15px}table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}th,td{border:1px solid #bbb;padding:5px 7px;text-align:left}th{background:#eee}td.n{text-align:right}</style></head><body>${body}<p style="color:#777;font-size:12px">${new Date().toLocaleString('en-GB')}</p></body></html>`);
+  w.document.close(); setTimeout(() => w.print(), 400);
+}
+function personPDF(id) {
+  const p = person(id); let run = 0;
+  const rows = txOf(id).map(t => { run += SIGN[t.type] * t.amount; return `<tr><td>${esc(t.date)}</td><td>${esc(t.item || t.method || '')}${t.ctn ? ' · 📦 ' + fmt(t.ctn) + ' ካርቶን' : ''}</td><td>${LABEL[t.type]}</td><td class="n">${SIGN[t.type] > 0 ? '+' : '−'}${fmt(t.amount)}</td><td class="n">${fmt(run)}</td></tr>`; }).join('');
+  printDoc('መግለጫ', `<h1>የ${esc(p.name)} ሂሳብ መግለጫ</h1><table><tr><th>ቀን</th><th>ዕቃ / መንገድ</th><th>አይነት</th><th>መጠን</th><th>ቀሪ</th></tr>${rows}</table><h3>${balLabel(run)}፡ ${fmt(Math.abs(run))} ብር</h3>`);
+}
+
+/* ---------- send person ledger (CSV) to Telegram ---------- */
+async function sendPersonCSV(id) {
+  const p = person(id); let run = 0;
+  const rows = [['ቀን', 'ዕቃ / መንገድ', 'አይነት', 'ካርቶን', 'ብዛት', 'የአንዱ ዋጋ', 'መጠን (+/−)', 'ቀሪ', 'ቀነ ገደብ', 'ማስታወሻ']];
+  txOf(id).forEach(t => { run += SIGN[t.type] * t.amount; rows.push([t.date, t.item || t.method || '', LABEL[t.type], t.ctn || '', t.qty || '', t.price || '', SIGN[t.type] * t.amount, run, t.due || '', t.note || '']); });
+  rows.push(['', '', '', '', '', '', balLabel(run), run, '', '']);
+  const stamp = `${p.name.replace(/[^\w\u1200-\u137F-]+/g, '_')}-${today()}-${new Date().toTimeString().slice(0, 5).replace(':', '')}`;
+  const blob = new Blob(['\ufeff' + rows.map(r => r.map(c => typeof c === 'number' ? String(c) : `"${String(c ?? '').replace(/"/g, '""')}"`).join(',')).join('\n')], {type: 'text/csv;charset=utf-8'});
+  const fname = stamp + '.csv';
+  if (cfg.token && cfg.chat) {
+    toast('ወደ Telegram እየላከ ነው…');
+    try {
+      const fd = new FormData(); fd.append('chat_id', cfg.chat); fd.append('caption', `${p.name} — ${balLabel(run)}፡ ${fmt(Math.abs(run))} ብር`); fd.append('document', blob, fname);
+      const j = await (await fetch(`https://api.telegram.org/bot${cfg.token}/sendDocument`, {method: 'POST', body: fd})).json();
+      return toast(j.ok ? 'CSV' + ' ወደ Telegram ተልኳል ✓' : 'አልተላከም: ' + (j.description || 'Token/Chat ID ያረጋግጡ'));
+    } catch (e) { toast('ኢንተርኔት የለም — ፋይሉ ይወርዳል'); }
+  }
+  const file = new File([blob], fname, {type: blob.type});
+  try { if (navigator.canShare && navigator.canShare({files: [file]})) { await navigator.share({files: [file]}); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
+  download(fname, blob, blob.type);
+  if (!cfg.token) toast('Telegram አልተቀናበረም — ፋይሉ ወርዷል (ቅንብር ውስጥ አስገባ)');
+}
+
+/* ---------- auto Telegram backup ---------- */
+let tgTimer = null;
+function scheduleTg() {
+  if (!cfg.auto || !cfg.token || !cfg.chat) return;
+  clearTimeout(tgTimer);
+  tgTimer = setTimeout(async () => {
+    try {
+      const fd = new FormData(); fd.append('chat_id', cfg.chat); fd.append('document', await backupBlob(false), `edha-backup-${today()}.json`);
+      const j = await (await fetch(`https://api.telegram.org/bot${cfg.token}/sendDocument`, {method: 'POST', body: fd})).json();
+      if (j.ok) { db.lastBackup = Date.now(); try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (e) {} toast('Telegram ምትኬ ✓'); }
+    } catch (e) {}
+  }, 8000);
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click', async e => {
+  const el = e.target.closest('[data-act]'); if (!el) return;
+  const a = el.dataset.act, id = el.dataset.id;
+  if (a === 'go') { view = {...view, name: el.dataset.v, _focusQ: false}; render(); window.scrollTo(0, 0); }
+  else if (a === 'open') { view = {...view, name: 'person', pid: id, pq: ''}; render(); window.scrollTo(0, 0); }
+  else if (a === 'filter') { view.filter = el.dataset.k; view._focusQ = false; render(); }
+  else if (a === 'install') doInstall();
+  else if (a === 'new') openTx({pid: el.dataset.pid});
+  else if (a === 'edit') openTx({id});
+  else if (a === 'editp') editPerson(id);
+  else if (a === 'delp') {
+    const p = person(id);
+    if (confirm(`"${p.name}" እና ሁሉም ግብይቶቹ ይሰረዙ? ወደ ታሪክ ይወሰዳል፤ ከዚያ መመለስ ይቻላል።`)) { toTrash({kind: 'person', person: p, txs: db.tx.filter(t => t.pid === id)}); db.people = db.people.filter(x => x.id !== id); db.tx = db.tx.filter(t => t.pid !== id); save(); view = {...view, name: 'home'}; render(); }
+  }
+  else if (a === 'noinst') { cfg.noInstall = true; saveCfg(); render(); }
+  else if (a === 'pcsv') sendPersonCSV(id);
+  else if (a === 'item') openItem(el.dataset.k);
+  else if (a === 'undo') doUndo();
+  else if (a === 'quickpay') quickPay(id);
+  else if (a === 'repeat') openRepeat(id);
+  else if (a === 'pinset') pinAction('set');
+  else if (a === 'pinchg') pinAction('chg');
+  else if (a === 'pinoff') pinAction('off');
+  else if (a === 'range') { view.range = el.dataset.k; render(); }
+  else if (a === 'pdfr') printDoc('ሪፖርት', '<h1>የእዳ መዝገብ — ሪፖርት</h1>' + reportBody(reportData()));
+  else if (a === 'pdfp') personPDF(id);
+  else if (a === 'trestore') restoreTrash(id);
+  else if (a === 'tperm') { if (confirm('ለዘለዓለም ይሰረዝ?')) { db.trash = db.trash.filter(e => e.id !== id); save(); render(); } }
+  else if (a === 'tempty') { if (confirm('ታሪኩ ሁሉ ለዘለዓለም ይሰረዝ?')) { db.trash = []; save(); render(); } }
+  else if (a === 'notif') { if (!('Notification' in window)) return toast('ይህ browser አይደግፍም'); Notification.requestPermission().then(() => { render(); notifyDue(); }); }
+  else if (a === 'tgtest') {
+    cfg.token = $('#tgt').value.trim(); cfg.chat = $('#tgc').value.trim(); saveCfg();
+    try { const r = await fetch(`https://api.telegram.org/bot${cfg.token}/sendMessage`, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({chat_id: cfg.chat, text: '✅ የእዳ መዝገብ ከ Telegram ጋር ተገናኝቷል'})}); toast((await r.json()).ok ? 'የሙከራ መልእክት ተልኳል ✓' : 'አልተሳካም — Token/Chat ID ያረጋግጡ'); } catch (err) { toast('ኢንተርኔት የለም'); }
+  }
+  else if (a === 'export') { download(`edha-backup-${today()}.json`, await (await backupBlob(true)).text(), 'application/json'); db.lastBackup = Date.now(); save(); render(); }
+  else if (a === 'csv') download(`edha-${today()}.csv`, csv(), 'text/csv;charset=utf-8');
+  else if (a === 'import') $('#file').click();
+  else if (a === 'tgsave') { cfg.token = $('#tgt').value.trim(); cfg.chat = $('#tgc').value.trim(); saveCfg(); toast('ተቀምጧል'); }
+  else if (a === 'tgsend') {
+    cfg.token = $('#tgt').value.trim(); cfg.chat = $('#tgc').value.trim(); saveCfg();
+    if (!cfg.token || !cfg.chat) return toast('Token እና Chat ID ያስገቡ');
+    try {
+      const fd = new FormData(); fd.append('chat_id', cfg.chat);
+      fd.append('document', await backupBlob(true), `edha-backup-${today()}.json`);
+      const r = await fetch(`https://api.telegram.org/bot${cfg.token}/sendDocument`, {method: 'POST', body: fd});
+      const j = await r.json();
+      if (j.ok) { db.lastBackup = Date.now(); save(); render(); toast('ወደ Telegram ተልኳል ✓'); } else toast('አልተላከም: ' + (j.description || 'ስህተት'));
+    } catch (err) { toast('ኢንተርኔት የለም ወይም ስህተት'); }
+  }
+  else if (a === 'wipe') {
+    if (confirm('ሁሉም መረጃ ይሰረዝ? ምትኬ ካላወረዱ መመለስ አይቻልም።') && confirm('በእርግጥ?')) { db = {people: [], tx: [], lastBackup: null}; save(); view = {name: 'home', pid: null, filter: 'all', q: ''}; render(); }
+  }
+});
+document.addEventListener('input', e => {
+  if (e.target.id === 'q') { view.q = e.target.value; view._focusQ = true; render(); }
+  else if (e.target.id === 'pq') { view.pq = e.target.value; view._focusP = true; render(); }
+  else if (e.target.id === 'iq') { view.iq = e.target.value; view._focusI = true; render(); }
+});
+document.addEventListener('change', e => {
+  if (e.target.id === 'tga') { cfg.auto = e.target.checked; saveCfg(); toast(cfg.auto ? 'በራስ-ሰር ምትኬ በርቷል' : 'በራስ-ሰር ምትኬ ጠፍቷል'); return; }
+  if (e.target.id !== 'file') return;
+  const f = e.target.files[0]; if (!f) return;
+  const rd = new FileReader();
+  rd.onload = async () => {
+    try {
+      const j = JSON.parse(rd.result);
+      if (!Array.isArray(j.people) || !Array.isArray(j.tx)) throw 0;
+      const info = `${j.people.length} ሰዎች እና ${j.tx.length} ግብይቶች`;
+      if (confirm(`${info} ከአሁኑ መረጃ ጋር ይጨመሩ?\n\nOK = ጨምር (አሁን ያለው አይሰረዝም)\nCancel = ሌላ ምርጫ`)) {
+        const pid = new Set(db.people.map(p => p.id)), tid = new Set(db.tx.map(t => t.id));
+        db.people.push(...j.people.filter(p => !pid.has(p.id)));
+        db.tx.push(...j.tx.filter(t => !tid.has(t.id)));
+      } else if (confirm(`በምትኩ አሁን ያለው መረጃ በሙሉ በ${info} ይተካ?`)) {
+        db.people = j.people; db.tx = j.tx; db.trash = j.trash || [];
+      } else return;
+      if (j.images) for (const [k, v] of Object.entries(j.images)) { try { await imgPut(k, v); } catch (err) {} }
+      save(); view = {...view, name: 'home'}; render(); toast('ተመልሷል ✓');
+    } catch (err) { toast('ፋይሉ ትክክል አይደለም'); }
+  };
+  rd.readAsText(f); e.target.value = '';
+});
+
+render();
+if (cfg.pinHash) showLock(); else notifyDue();
+
+/* ---------- offline (service worker) ---------- */
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  navigator.serviceWorker.register('sw.js').then(reg => {
+    setInterval(() => reg.update().catch(() => {}), 30 * 60 * 1000);
+  }).catch(() => {});
+}
+window.addEventListener('offline', () => toast('📴 ኢንተርኔት የለም — መረጃ በስልክህ ይቀመጣል'));
+window.addEventListener('online', () => toast('✅ ኢንተርኔት ተመልሷል'));
+</script>
+</body>
+</html>
